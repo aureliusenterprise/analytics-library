@@ -1,0 +1,244 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>m4i_analytics.shared.model package &#8212; analytics-library  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="m4i_analytics.text package" href="m4i_analytics.text.html" />
+    <link rel="prev" title="m4i_analytics.shared package" href="m4i_analytics.shared.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="m4i-analytics-shared-model-package">
+<h1>m4i_analytics.shared.model package<a class="headerlink" href="#m4i-analytics-shared-model-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-m4i_analytics.shared.model.BaseModel">
+<span id="m4i-analytics-shared-model-basemodel-module"></span><h2>m4i_analytics.shared.model.BaseModel module<a class="headerlink" href="#module-m4i_analytics.shared.model.BaseModel" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="m4i_analytics.shared.model.BaseModel.BaseModel">
+<em class="property">class </em><code class="descclassname">m4i_analytics.shared.model.BaseModel.</code><code class="descname">BaseModel</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/m4i_analytics/shared/model/BaseModel.html#BaseModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#m4i_analytics.shared.model.BaseModel.BaseModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is intended to be inherited by all model objects. Classes inheriting BaseModel can be easily (de)serialized from/to JSON.</p>
+<p>Inheriting classes can define their attributes as a list of tuples (attr_name, attr_type, is_list):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ExampleModel</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+   <span class="n">_fields</span> <span class="o">=</span> <span class="p">[</span>
+       <span class="p">(</span><span class="s1">&#39;simple_attr&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+       <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;complex_attr&#39;</span><span class="p">,</span> <span class="n">Class</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+       <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;int_array&#39;</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span> <span class="c1">#The boolean signifies that this is an array</span>
+       <span class="p">,</span> <span class="o">...</span> 
+   <span class="p">]</span>
+<span class="c1">#END ExampleModel</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="http://www.seanjohnsen.com/2016/11/23/pydeserialization.html">Source</a></p>
+<p>The BaseModel constructor takes an arbitrary number of key-value pairs. Parameters for which the key does not occur in the _fields definition of the class are ignored. Specified _fields that do not exist in the parameters are assigned the None value.</p>
+<dl class="classmethod">
+<dt id="m4i_analytics.shared.model.BaseModel.BaseModel.fromDataFrame">
+<em class="property">classmethod </em><code class="descname">fromDataFrame</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/m4i_analytics/shared/model/BaseModel.html#BaseModel.fromDataFrame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#m4i_analytics.shared.model.BaseModel.BaseModel.fromDataFrame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map a Pandas DataFrame to instances of this class</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of instances of this class for each row in the dataframe</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">array&lt;BaseModel&gt;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>df</strong> (<em>DataFrame</em>) – The Pandas DataFrame containing the records you wish to map to this class</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="m4i_analytics.shared.model.BaseModel.BaseModel.fromDict">
+<em class="property">classmethod </em><code class="descname">fromDict</code><span class="sig-paren">(</span><em>dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/m4i_analytics/shared/model/BaseModel.html#BaseModel.fromDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#m4i_analytics.shared.model.BaseModel.BaseModel.fromDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new instance of this class based on the given dict</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A new instance of this class based on the given dict</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#m4i_analytics.shared.model.BaseModel.BaseModel" title="m4i_analytics.shared.model.BaseModel.BaseModel">BaseModel</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dict</strong> (<em>dict</em>) – The dict providing the property values</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="m4i_analytics.shared.model.BaseModel.BaseModel.fromJSON">
+<em class="property">classmethod </em><code class="descname">fromJSON</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/m4i_analytics/shared/model/BaseModel.html#BaseModel.fromJSON"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#m4i_analytics.shared.model.BaseModel.BaseModel.fromJSON" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deserialize an new instance of this class from a JSON string</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An instance of the class on which this method was called, with the given attribute values.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#m4i_analytics.shared.model.BaseModel.BaseModel" title="m4i_analytics.shared.model.BaseModel.BaseModel">BaseModel</a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data</strong> (<em>str</em>) – A JSON string describing the instance</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><strong>TypeError</strong> – Thrown when the JSON string contained invalid arguments</li>
+<li><strong>ValueError</strong> – Thrown when the given string could not be parsed as JSON</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="m4i_analytics.shared.model.BaseModel.BaseModel.toDataFrame">
+<code class="descname">toDataFrame</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/m4i_analytics/shared/model/BaseModel.html#BaseModel.toDataFrame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#m4i_analytics.shared.model.BaseModel.BaseModel.toDataFrame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform this instance to a Pandas DataFrame</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A Pandas DataFrame mirroring this instance</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">DataFrame</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="m4i_analytics.shared.model.BaseModel.BaseModel.toDict">
+<code class="descname">toDict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/m4i_analytics/shared/model/BaseModel.html#BaseModel.toDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#m4i_analytics.shared.model.BaseModel.BaseModel.toDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform this instance into regular python dict containing all properties of this object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A python dict containing all properties of this object.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="m4i_analytics.shared.model.BaseModel.BaseModel.toJSON">
+<code class="descname">toJSON</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/m4i_analytics/shared/model/BaseModel.html#BaseModel.toJSON"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#m4i_analytics.shared.model.BaseModel.BaseModel.toJSON" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize this instance as a JSON string</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A JSON string representing this object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-m4i_analytics.shared.model">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-m4i_analytics.shared.model" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">m4i_analytics.shared.model package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-m4i_analytics.shared.model.BaseModel">m4i_analytics.shared.model.BaseModel module</a></li>
+<li><a class="reference internal" href="#module-m4i_analytics.shared.model">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="m4i_analytics.html">m4i_analytics package</a><ul>
+  <li><a href="m4i_analytics.shared.html">m4i_analytics.shared package</a><ul>
+      <li>Previous: <a href="m4i_analytics.shared.html" title="previous chapter">m4i_analytics.shared package</a></li>
+      <li>Next: <a href="m4i_analytics.text.html" title="next chapter">m4i_analytics.text package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/m4i_analytics.shared.model.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Author.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/m4i_analytics.shared.model.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

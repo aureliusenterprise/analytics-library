@@ -1,0 +1,343 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>m4i_analytics.graphs.languages.archimate.metamodel.Concepts &#8212; analytics-library  documentation</title>
+    <link rel="stylesheet" href="../../../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for m4i_analytics.graphs.languages.archimate.metamodel.Concepts</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">Enum</span>
+
+<div class="viewcode-block" id="Aspect"><a class="viewcode-back" href="../../../../../../m4i_analytics.graphs.languages.archimate.metamodel.html#m4i_analytics.graphs.languages.archimate.metamodel.Concepts.Aspect">[docs]</a><span class="k">class</span> <span class="nc">Aspect</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Aspect enumerates all aspects of the Archimate 3.0 language framework</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">ACTIVE</span> <span class="o">=</span> <span class="s1">&#39;active structure&#39;</span>
+    <span class="n">BEHAVIORAL</span> <span class="o">=</span> <span class="s1">&#39;behavioral&#39;</span>
+    <span class="n">COMPOSITE</span> <span class="o">=</span> <span class="s1">&#39;composite&#39;</span>
+    <span class="n">MOTIVATION</span> <span class="o">=</span> <span class="s1">&#39;motivation&#39;</span>
+    <span class="n">PASSIVE</span> <span class="o">=</span> <span class="s1">&#39;passive structure&#39;</span></div>
+
+<span class="c1"># END Aspect</span>
+    
+<div class="viewcode-block" id="Layer"><a class="viewcode-back" href="../../../../../../m4i_analytics.graphs.languages.archimate.metamodel.html#m4i_analytics.graphs.languages.archimate.metamodel.Concepts.Layer">[docs]</a><span class="k">class</span> <span class="nc">Layer</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Layer enumerates all layers of the Archimate 3.0 language framework</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">APPLICATION</span> <span class="o">=</span> <span class="s1">&#39;application&#39;</span>
+    <span class="n">BUSINESS</span> <span class="o">=</span> <span class="s1">&#39;business&#39;</span>
+    <span class="n">COMPOSITE</span> <span class="o">=</span> <span class="s1">&#39;composite&#39;</span>
+    <span class="n">IMPLEMENTATION_MIGRATION</span> <span class="o">=</span> <span class="s1">&#39;implementation &amp; migration&#39;</span>
+    <span class="n">MOTIVATION</span> <span class="o">=</span> <span class="s1">&#39;motivation&#39;</span>
+    <span class="n">PHYSICAL</span> <span class="o">=</span> <span class="s1">&#39;physical&#39;</span>
+    <span class="n">STRATEGY</span> <span class="o">=</span> <span class="s1">&#39;strategy&#39;</span>    
+    <span class="n">TECHNOLOGY</span> <span class="o">=</span> <span class="s1">&#39;technology&#39;</span></div>
+    
+<span class="c1"># END Layer</span>
+
+<span class="k">class</span> <span class="nc">_ElementType</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">layer</span><span class="p">,</span> <span class="n">aspect</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer</span> <span class="o">=</span> <span class="n">layer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aspect</span> <span class="o">=</span> <span class="n">aspect</span>
+    <span class="c1"># END __init__</span>
+    
+<span class="c1"># END _ElementType</span>
+    
+<div class="viewcode-block" id="ElementType"><a class="viewcode-back" href="../../../../../../m4i_analytics.graphs.languages.archimate.metamodel.html#m4i_analytics.graphs.languages.archimate.metamodel.Concepts.ElementType">[docs]</a><span class="k">class</span> <span class="nc">ElementType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ElementType enumerates all element types in Archimate 3.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+
+    <span class="n">APPLICATION_COLLABORATION</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Application Collaboration&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_ApplicationCollaboration&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">APPLICATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">)</span>
+    <span class="n">APPLICATION_COMPONENT</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Application Component&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_ApplicationComponent&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">APPLICATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">)</span>
+    <span class="n">APPLICATION_EVENT</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Application Event&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_ApplicationEvent&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">APPLICATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">BEHAVIORAL</span><span class="p">)</span>
+    <span class="n">APPLICATION_FUNCTION</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Application Function&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_ApplicationFunction&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">APPLICATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">BEHAVIORAL</span><span class="p">)</span>
+    <span class="n">APPLICATION_INTERACTION</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Application Interaction&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_ApplicationInteraction&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">APPLICATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">BEHAVIORAL</span><span class="p">)</span>
+    <span class="n">APPLICATION_INTERFACE</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Application Interface&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_ApplicationInterface&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">APPLICATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">)</span>
+    <span class="n">APPLICATION_PROCESS</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Application Process&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_ApplicationProcess&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">APPLICATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">BEHAVIORAL</span><span class="p">)</span>
+    <span class="n">APPLICATION_SERVICE</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Application Serivce&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_ApplicationService&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">APPLICATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">BEHAVIORAL</span><span class="p">)</span>
+    <span class="n">ARTIFACT</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Artifact&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Artifact&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">TECHNOLOGY</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">PASSIVE</span><span class="p">)</span>
+    <span class="n">ASSESSMENT</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Assessment&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Assessment&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">MOTIVATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">MOTIVATION</span><span class="p">)</span>
+    <span class="n">BUSINESS_ACTOR</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Business Actor&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_BusinessActor&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">BUSINESS</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">)</span>
+    <span class="n">BUSINESS_COLLABORATION</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Business Collaboration&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_BusinessCollaboration&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">BUSINESS</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">)</span>
+    <span class="n">BUSINESS_EVENT</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Business Event&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Business_Event&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">BUSINESS</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">BEHAVIORAL</span><span class="p">)</span>
+    <span class="n">BUSINESS_FUNCTION</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Business Function&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_BusinessFunction&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">BUSINESS</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">BEHAVIORAL</span><span class="p">)</span>
+    <span class="n">BUSINESS_INTERACTION</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Business Interaction&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_BusinessInteraction&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">BUSINESS</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">BEHAVIORAL</span><span class="p">)</span>
+    <span class="n">BUSINESS_INTERFACE</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Business Interface&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_BusinessInterface&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">BUSINESS</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">)</span>
+    <span class="n">BUSINESS_OBJECT</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Business Object&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_BusinessObject&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">BUSINESS</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">PASSIVE</span><span class="p">)</span>
+    <span class="n">BUSINESS_PROCESS</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Business Process&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_BusinessProcess&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">BUSINESS</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">BEHAVIORAL</span><span class="p">)</span>
+    <span class="n">BUSINESS_ROLE</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Business Role&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_BusinessRole&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">BUSINESS</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">)</span>
+    <span class="n">BUSINESS_SERVICE</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Business Service&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_BusinessService&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">BUSINESS</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">BEHAVIORAL</span><span class="p">)</span>
+    <span class="n">CAPABILITY</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Capability&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Capability&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">STRATEGY</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">BEHAVIORAL</span><span class="p">)</span>
+    <span class="n">COMMUNICATION_NETWORK</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Communication Network&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_CommunicationNetwork&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">TECHNOLOGY</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">PASSIVE</span><span class="p">)</span>
+    <span class="n">CONSTRAINT</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Constraint&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Constraint&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">MOTIVATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">MOTIVATION</span><span class="p">)</span>
+    <span class="n">CONTRACT</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Contract&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Contract&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">BUSINESS</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">PASSIVE</span><span class="p">)</span>
+    <span class="n">COURSE_OF_ACTION</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Course of Action&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_CourseOfAction&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">STRATEGY</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">BEHAVIORAL</span><span class="p">)</span>
+    <span class="n">DATA_OBJECT</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Data Object&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_DataObject&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">APPLICATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">PASSIVE</span><span class="p">)</span>
+    <span class="n">DELIVERABLE</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Deliverable&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Deliverable&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">IMPLEMENTATION_MIGRATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">PASSIVE</span><span class="p">)</span>
+    <span class="n">DEVICE</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Device&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Device&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">TECHNOLOGY</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">)</span>
+    <span class="n">DISTRIBUTION_NETWORK</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Distribution Network&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_DistributionNetwork&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">PHYSICAL</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">PASSIVE</span><span class="p">)</span>
+    <span class="n">DRIVER</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Driver&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Driver&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">MOTIVATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">MOTIVATION</span><span class="p">)</span>
+    <span class="n">EQUIPMENT</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Equipment&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Equipment&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">PHYSICAL</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">)</span>
+    <span class="n">FACILITY</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Facility&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Facility&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">PHYSICAL</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">)</span>
+    <span class="n">GAP</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Gap&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Gap&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">IMPLEMENTATION_MIGRATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">PASSIVE</span><span class="p">)</span>
+    <span class="n">GOAL</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Goal&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Goal&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">MOTIVATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">MOTIVATION</span><span class="p">)</span>
+    <span class="n">GROUPING</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Grouping&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Grouping&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">COMPOSITE</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">COMPOSITE</span><span class="p">)</span>
+    <span class="n">IMPLEMENTATION_EVENT</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Implementation Event&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_ImplementationEvent&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">IMPLEMENTATION_MIGRATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">BEHAVIORAL</span><span class="p">)</span>
+    <span class="n">LOCATION</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Location&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Location&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">COMPOSITE</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">COMPOSITE</span><span class="p">)</span>
+    <span class="n">MATERIAL</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Material&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Material&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">PHYSICAL</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">PASSIVE</span><span class="p">)</span>
+    <span class="n">MEANING</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Meaning&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Meaning&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">MOTIVATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">MOTIVATION</span><span class="p">)</span>
+    <span class="n">NODE</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Node&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Node&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">TECHNOLOGY</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">)</span>
+    <span class="n">PATH</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Path&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Path&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">TECHNOLOGY</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">PASSIVE</span><span class="p">)</span>
+    <span class="n">OUTCOME</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Outcome&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Outcome&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">MOTIVATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">MOTIVATION</span><span class="p">)</span>
+    <span class="n">PLATEAU</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Plateau&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Plateau&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">IMPLEMENTATION_MIGRATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">COMPOSITE</span><span class="p">)</span>
+    <span class="n">PRINCIPLE</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Principle&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Principle&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">MOTIVATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">MOTIVATION</span><span class="p">)</span>
+    <span class="n">PRODUCT</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Product&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Product&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">BUSINESS</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">PASSIVE</span><span class="p">)</span>
+    <span class="n">REPRESENTATION</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Representation&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Representation&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">BUSINESS</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">PASSIVE</span><span class="p">)</span>
+    <span class="n">REQUIREMENT</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Requirement&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Requirement&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">MOTIVATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">MOTIVATION</span><span class="p">)</span>
+    <span class="n">RESOURCE</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Resource&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Resource&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">STRATEGY</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">COMPOSITE</span><span class="p">)</span>
+    <span class="n">STAKEHOLDER</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Stakeholder&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Stakeholder&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">MOTIVATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">)</span>
+    <span class="n">SYSTEM_SOFTWARE</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;System Software&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_SystemSoftware&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">TECHNOLOGY</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">)</span>
+    <span class="n">TECHNOLOGY_COLLABORATION</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Technology Collaboration&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_TechnologyCollaboration&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">TECHNOLOGY</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">)</span>
+    <span class="n">TECHNOLOGY_EVENT</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Technology Event&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_TechnologyEvent&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">TECHNOLOGY</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">BEHAVIORAL</span><span class="p">)</span>
+    <span class="n">TECHNOLOGY_FUNCTION</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Technology Function&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_TechnologyFunction&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">TECHNOLOGY</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">BEHAVIORAL</span><span class="p">)</span>
+    <span class="n">TECHNOLOGY_INTERACTION</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Technology Interaction&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_TechnologyInteraction&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">TECHNOLOGY</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">BEHAVIORAL</span><span class="p">)</span>
+    <span class="n">TECHNOLOGY_INTERFACE</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Technology Interface&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_TechnologyInterface&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">TECHNOLOGY</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">)</span>
+    <span class="n">TECHNOLOGY_PROCESS</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Technology Process&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_TechnologyProcess&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">TECHNOLOGY</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">BEHAVIORAL</span><span class="p">)</span>
+    <span class="n">TECHNOLOGY_SERVICE</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Technology Service&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_TechnologyService&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">TECHNOLOGY</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">BEHAVIORAL</span><span class="p">)</span>
+    <span class="n">VALUE</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Value&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Value&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">MOTIVATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">MOTIVATION</span><span class="p">)</span>
+    <span class="n">WORK_PACKAGE</span> <span class="o">=</span> <span class="n">_ElementType</span><span class="p">(</span><span class="s1">&#39;Work Package&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_WorkPackage&#39;</span><span class="p">,</span> <span class="n">Layer</span><span class="o">.</span><span class="n">IMPLEMENTATION_MIGRATION</span><span class="p">,</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">BEHAVIORAL</span><span class="p">)</span>
+    
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">getElementByTag</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find a specific ArchiMate element by its exchange format tag name.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: The ArchiMate element matching the tag name. If there is no match, returns None instead.</span>
+<span class="sd">        :rtype: ElementType</span>
+<span class="sd">        </span>
+<span class="sd">        :param str tag: The exchange format tag name of the element.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">cls</span> <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="n">tag</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">result</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="c1"># END getElementByTag</span>
+    
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">getElementByName</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find a specific ArchiMate element by its human readable type name.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: The ArchiMate element matching the type name. If there is no match, returns None instead.</span>
+<span class="sd">        :rtype: ElementType</span>
+<span class="sd">        </span>
+<span class="sd">        :param str name: The human readable type name of the element.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">cls</span> <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">result</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="c1"># END getElementByTag</span>
+    
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">getElementsByLayer</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">layer</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find all Archimate elements that are part of a specific layer (horizontal slice of the language framework).</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: A list of all elements in a particular layer.</span>
+<span class="sd">        :rtype: :func: list of ElementType</span>
+<span class="sd">        </span>
+<span class="sd">        :param Layer layer: The layer for which to retrieve the elements.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">return</span> <span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">cls</span> <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">layer</span> <span class="o">==</span> <span class="n">layer</span><span class="p">]</span>
+    <span class="c1"># END getElementsByLayer</span>
+    
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">getElementsByAspect</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">aspect</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find all Archimate elements that are part of a specific aspect (vertical slice of the language framework).</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: A list of all elements in a particular aspect.</span>
+<span class="sd">        :rtype: :func: list of ElementType</span>
+<span class="sd">        </span>
+<span class="sd">        :param Aspect aspect: The aspect for which to retrieve the elements.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">return</span> <span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">cls</span> <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">aspect</span> <span class="o">==</span> <span class="n">aspect</span><span class="p">]</span></div>
+    <span class="c1"># END getElementsByAspect</span>
+    
+<span class="c1"># END ElementType</span>
+    
+<div class="viewcode-block" id="RelationshipClass"><a class="viewcode-back" href="../../../../../../m4i_analytics.graphs.languages.archimate.metamodel.html#m4i_analytics.graphs.languages.archimate.metamodel.Concepts.RelationshipClass">[docs]</a><span class="k">class</span> <span class="nc">RelationshipClass</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    RelationshipClass enumerates all relationship classes in Archimate 3.0.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">STRUCTURAL</span> <span class="o">=</span> <span class="s1">&#39;structural&#39;</span>
+    <span class="n">DEPENDENCY</span> <span class="o">=</span> <span class="s1">&#39;dependency&#39;</span>
+    <span class="n">DYNAMIC</span> <span class="o">=</span> <span class="s1">&#39;dynamic&#39;</span>
+    <span class="n">OTHER</span> <span class="o">=</span> <span class="s1">&#39;other&#39;</span> </div>
+
+<span class="c1"># END RelationshipClass</span>
+
+<span class="k">class</span> <span class="nc">_RelationshipType</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">shorthand</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shorthand</span> <span class="o">=</span> <span class="n">shorthand</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">=</span> <span class="bp">cls</span>
+    <span class="c1"># END __init__</span>
+    
+<span class="c1"># END _RelationshipType</span>
+    
+<div class="viewcode-block" id="RelationshipType"><a class="viewcode-back" href="../../../../../../m4i_analytics.graphs.languages.archimate.metamodel.html#m4i_analytics.graphs.languages.archimate.metamodel.Concepts.RelationshipType">[docs]</a><span class="k">class</span> <span class="nc">RelationshipType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    RelationshipType enumerates all relationship types in Archimate 3.0. </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">ACCESS</span> <span class="o">=</span> <span class="n">_RelationshipType</span><span class="p">(</span><span class="s1">&#39;Access&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Access&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">RelationshipClass</span><span class="o">.</span><span class="n">DEPENDENCY</span><span class="p">)</span>
+    <span class="n">AGGREGATION</span> <span class="o">=</span> <span class="n">_RelationshipType</span><span class="p">(</span><span class="s1">&#39;Aggregation&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Aggregation&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">RelationshipClass</span><span class="o">.</span><span class="n">STRUCTURAL</span><span class="p">)</span>
+    <span class="n">AND_JUNCTION</span> <span class="o">=</span> <span class="n">_RelationshipType</span><span class="p">(</span><span class="s1">&#39;And Junction&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_AndJunction&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">RelationshipClass</span><span class="o">.</span><span class="n">OTHER</span><span class="p">)</span>
+    <span class="n">ASSIGNMENT</span> <span class="o">=</span> <span class="n">_RelationshipType</span><span class="p">(</span><span class="s1">&#39;Assignment&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Assignment&#39;</span><span class="p">,</span> <span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="n">RelationshipClass</span><span class="o">.</span><span class="n">STRUCTURAL</span><span class="p">)</span>
+    <span class="n">ASSOCIATION</span> <span class="o">=</span> <span class="n">_RelationshipType</span><span class="p">(</span><span class="s1">&#39;Association&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Association&#39;</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">RelationshipClass</span><span class="o">.</span><span class="n">OTHER</span><span class="p">)</span>
+    <span class="n">COMPOSITION</span> <span class="o">=</span> <span class="n">_RelationshipType</span><span class="p">(</span><span class="s1">&#39;Composition&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Composition&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">RelationshipClass</span><span class="o">.</span><span class="n">STRUCTURAL</span><span class="p">)</span>
+    <span class="n">FLOW</span> <span class="o">=</span> <span class="n">_RelationshipType</span><span class="p">(</span><span class="s1">&#39;Flow&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Flow&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">RelationshipClass</span><span class="o">.</span><span class="n">DYNAMIC</span><span class="p">)</span>
+    <span class="n">INFLUENCE</span> <span class="o">=</span> <span class="n">_RelationshipType</span><span class="p">(</span><span class="s1">&#39;Influence&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Influence&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="n">RelationshipClass</span><span class="o">.</span><span class="n">DEPENDENCY</span><span class="p">)</span>
+    <span class="n">OR_JUNCTION</span> <span class="o">=</span> <span class="n">_RelationshipType</span><span class="p">(</span><span class="s1">&#39;Or Junction&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_OrJunction&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">RelationshipClass</span><span class="o">.</span><span class="n">OTHER</span><span class="p">)</span>
+    <span class="n">REALIZATION</span> <span class="o">=</span> <span class="n">_RelationshipType</span><span class="p">(</span><span class="s1">&#39;Realization&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Realization&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">RelationshipClass</span><span class="o">.</span><span class="n">STRUCTURAL</span><span class="p">)</span>
+    <span class="n">SERVING</span> <span class="o">=</span> <span class="n">_RelationshipType</span><span class="p">(</span><span class="s1">&#39;Serving&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Serving&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="n">RelationshipClass</span><span class="o">.</span><span class="n">DEPENDENCY</span><span class="p">)</span>
+    <span class="n">SPECIALIZATION</span> <span class="o">=</span> <span class="n">_RelationshipType</span><span class="p">(</span><span class="s1">&#39;Specialization&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Specialization&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">RelationshipClass</span><span class="o">.</span><span class="n">OTHER</span><span class="p">)</span>
+    <span class="n">TRIGGERING</span> <span class="o">=</span> <span class="n">_RelationshipType</span><span class="p">(</span><span class="s1">&#39;Triggering&#39;</span><span class="p">,</span> <span class="s1">&#39;ar3_Triggering&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="n">RelationshipClass</span><span class="o">.</span><span class="n">DYNAMIC</span><span class="p">)</span>
+    
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">getRelationshipByTag</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find a specific ArchiMate relationship by its exchange format tag name.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: The ArchiMate relationship matching the tag name. If there is no match, returns None instead.</span>
+<span class="sd">        :rtype: RelationshipType</span>
+<span class="sd">        </span>
+<span class="sd">        :param str tag: The exchange format tag name of the elemen-t.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">cls</span> <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="n">tag</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">result</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="c1"># END getRelationshipByTag</span>
+    
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">getRelationshipByName</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find a specific ArchiMate relationship by its human readable type name.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: The ArchiMate relationship matching the type name. If there is no match, returns None instead.</span>
+<span class="sd">        :rtype: RelationshipType</span>
+<span class="sd">        </span>
+<span class="sd">        :param str name: The human readable type name of the element.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">cls</span> <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">result</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="c1"># END getRelationshipByTag</span>
+    
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">getRelationshipsByClass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">relcls</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find the ArchiMate relationships that are part of a particular relationship class.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: A list of all relationship types that are part of a particular class.</span>
+<span class="sd">        :rtype: :func: list of RelationshipType</span>
+<span class="sd">        </span>
+<span class="sd">        :param RelationshipClass relcls: The class to which the relationship types should belong.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">return</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">cls</span> <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">cls</span> <span class="o">==</span> <span class="n">relcls</span><span class="p">]</span></div>
+    <span class="c1"># END getRelationshipByClass</span>
+    
+<span class="c1"># END RelationshipType</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Author.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

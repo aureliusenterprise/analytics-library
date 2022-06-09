@@ -1,0 +1,262 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>m4i_analytics.graphs.model.Graph &#8212; analytics-library  documentation</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for m4i_analytics.graphs.model.Graph</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="k">import</span> <span class="n">DataFrame</span>
+
+<div class="viewcode-block" id="NodeAttribute"><a class="viewcode-back" href="../../../../m4i_analytics.graphs.model.html#m4i_analytics.graphs.model.Graph.NodeAttribute">[docs]</a><span class="k">class</span> <span class="nc">NodeAttribute</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class enumerates the keys to the node properties that need to be mapped for standardized analytics functions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">ID</span> <span class="o">=</span> <span class="s2">&quot;id&quot;</span>
+    <span class="n">NAME</span> <span class="o">=</span> <span class="s2">&quot;name&quot;</span>
+    <span class="n">LABEL</span> <span class="o">=</span> <span class="s2">&quot;label&quot;</span>
+    <span class="n">TYPE</span> <span class="o">=</span> <span class="s2">&quot;type&quot;</span></div>
+<span class="c1"># END NodeAttributes</span>
+
+
+<div class="viewcode-block" id="EdgeAttribute"><a class="viewcode-back" href="../../../../m4i_analytics.graphs.model.html#m4i_analytics.graphs.model.Graph.EdgeAttribute">[docs]</a><span class="k">class</span> <span class="nc">EdgeAttribute</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class enumerates the keys to the node properties that need to be mapped for standardized analytics functions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">ID</span> <span class="o">=</span> <span class="s2">&quot;id&quot;</span>
+    <span class="n">NAME</span> <span class="o">=</span> <span class="s2">&quot;name&quot;</span>
+    <span class="n">LABEL</span> <span class="o">=</span> <span class="s2">&quot;label&quot;</span>
+    <span class="n">SOURCE</span> <span class="o">=</span> <span class="s2">&quot;source&quot;</span>
+    <span class="n">TARGET</span> <span class="o">=</span> <span class="s2">&quot;target&quot;</span>
+    <span class="n">TYPE</span> <span class="o">=</span> <span class="s2">&quot;type&quot;</span></div>
+<span class="c1"># END EdgeAttributes</span>
+
+
+<div class="viewcode-block" id="Graph"><a class="viewcode-back" href="../../../../m4i_analytics.graphs.model.html#m4i_analytics.graphs.model.Graph.Graph">[docs]</a><span class="k">class</span> <span class="nc">Graph</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class represents a generic graph that can be used in various standardized analytics functions. The sets of nodes and edges are represented as Pandas DataFrames. To use your custom dataframes with standardized analytics functions, please map your columns to the attributes as specified in the respective enums.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">nodes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new Graph instance.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: a new Graph instance</span>
+<span class="sd">        :rtype: Graph</span>
+<span class="sd">        </span>
+<span class="sd">        :param pandas.DataFrame nodes: The nodes in your graph.</span>
+<span class="sd">        :param pandas.DataFrame edges: The edges in your graph.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span><span class="p">;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span> <span class="o">=</span> <span class="n">nodes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">edges</span> <span class="o">=</span> <span class="n">edges</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_nodeAttributeMapping</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_edgeAttributeMapping</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># END __init__</span>
+    
+<div class="viewcode-block" id="Graph.hasValidAttributeMapping"><a class="viewcode-back" href="../../../../m4i_analytics.graphs.model.html#m4i_analytics.graphs.model.Graph.Graph.hasValidAttributeMapping">[docs]</a>    <span class="k">def</span> <span class="nf">hasValidAttributeMapping</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks whether the mapping of attributes for nodes and edges is complete, and fits with the current DataFrame columns.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: Whether or not the current attribute mapping is valid.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hasValidNodeAttributeMapping</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">hasValidEdgeAttributeMapping</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="Graph.putNodeAttributeMapping"><a class="viewcode-back" href="../../../../m4i_analytics.graphs.model.html#m4i_analytics.graphs.model.Graph.Graph.putNodeAttributeMapping">[docs]</a>    <span class="k">def</span> <span class="nf">putNodeAttributeMapping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">ref</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a new node property mapping or override an existing one.</span>
+<span class="sd">        </span>
+<span class="sd">        :param str key: The lookup name of the property</span>
+<span class="sd">        :param str ref: The name of the DataFrame column that contains the property value</span>
+<span class="sd">        </span>
+<span class="sd">        :exception TypeError: Thrown when there is no nodes DataFrame associated with this graph</span>
+<span class="sd">        :exception ValueError: Thrown when the column name reference does not exist in the DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">NodeAttribute</span><span class="p">):</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">value</span>    
+            
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;There are no nodes associated with this graph! Please assign a dataframe to the nodes property first, before attempting to map property names.&#39;</span><span class="p">)</span>
+        
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">attr</span><span class="p">:</span> <span class="n">attr</span> <span class="o">==</span> <span class="n">ref</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">))):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The property you are attempting to map does not exist!&#39;</span><span class="p">)</span>   
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_nodeAttributeMapping</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">ref</span></div>
+    <span class="c1"># END putNodeAttributeMapping</span>
+    
+<div class="viewcode-block" id="Graph.getNodeAttributeMapping"><a class="viewcode-back" href="../../../../m4i_analytics.graphs.model.html#m4i_analytics.graphs.model.Graph.Graph.getNodeAttributeMapping">[docs]</a>    <span class="k">def</span> <span class="nf">getNodeAttributeMapping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve the name of the DataFrame column that contains a particular node property. If the property has not been mapped, this returns None.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: the name of the DataFrame column that contains a particular node property.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        </span>
+<span class="sd">        :param str key: The lookup name of the property</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">NodeAttribute</span><span class="p">):</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">value</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nodeAttributeMapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
+    <span class="c1"># END getNodeAttributeMapping</span>
+    
+<div class="viewcode-block" id="Graph.hasValidNodeAttributeMapping"><a class="viewcode-back" href="../../../../m4i_analytics.graphs.model.html#m4i_analytics.graphs.model.Graph.Graph.hasValidNodeAttributeMapping">[docs]</a>    <span class="k">def</span> <span class="nf">hasValidNodeAttributeMapping</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks whether the mapping of attributes for nodes is complete, and fits with the current DataFrame columns.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: Whether or not the current attribute mapping is valid.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">df_cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">)</span>
+        <span class="n">mapping_keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nodeAttributeMapping</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">attrs</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">NodeAttribute</span><span class="p">]</span>
+        
+        <span class="k">return</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">,</span> <span class="n">DataFrame</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mapping_keys</span><span class="p">,</span> <span class="n">attrs</span><span class="p">))</span>
+                <span class="ow">and</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">n</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df_cols</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nodeAttributeMapping</span><span class="o">.</span><span class="n">values</span><span class="p">()))))</span></div>
+    <span class="c1"># END hasValidNodeAttributeMapping</span>
+    
+<div class="viewcode-block" id="Graph.putEdgeAttributeMapping"><a class="viewcode-back" href="../../../../m4i_analytics.graphs.model.html#m4i_analytics.graphs.model.Graph.Graph.putEdgeAttributeMapping">[docs]</a>    <span class="k">def</span> <span class="nf">putEdgeAttributeMapping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">ref</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a new edge property mapping or override an existing one.</span>
+<span class="sd">        </span>
+<span class="sd">        :param str key: The lookup name of the property</span>
+<span class="sd">        :param str ref: The name of the DataFrame column that contains the property value</span>
+<span class="sd">        </span>
+<span class="sd">        :exception TypeError: Thrown when there is no edge DataFrame associated with this graph</span>
+<span class="sd">        :exception ValueError: Thrown when the column name reference does not exist in the DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">EdgeAttribute</span><span class="p">):</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">value</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;There are no edges associated with this graph! Please assign a dataframe to the edges property first, before attempting to map property names.&#39;</span><span class="p">)</span>
+            
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">attr</span><span class="p">:</span> <span class="n">attr</span> <span class="o">==</span> <span class="n">ref</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">))):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The property you are attempting to map does not exist!&#39;</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_edgeAttributeMapping</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">ref</span></div>
+    <span class="c1"># END putEdgeAttributeMapping</span>
+    
+<div class="viewcode-block" id="Graph.getEdgeAttributeMapping"><a class="viewcode-back" href="../../../../m4i_analytics.graphs.model.html#m4i_analytics.graphs.model.Graph.Graph.getEdgeAttributeMapping">[docs]</a>    <span class="k">def</span> <span class="nf">getEdgeAttributeMapping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve the name of the DataFrame column that contains a particular edge property. If the property has not been mapped, this returns None.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: the name of the DataFrame column that contains a particular edge property.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        </span>
+<span class="sd">        :param str key: The lookup name of the property</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">EdgeAttribute</span><span class="p">):</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">value</span>
+            
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edgeAttributeMapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
+    <span class="c1"># END getEdgeAttributeMapping</span>
+    
+<div class="viewcode-block" id="Graph.hasValidEdgeAttributeMapping"><a class="viewcode-back" href="../../../../m4i_analytics.graphs.model.html#m4i_analytics.graphs.model.Graph.Graph.hasValidEdgeAttributeMapping">[docs]</a>    <span class="k">def</span> <span class="nf">hasValidEdgeAttributeMapping</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks whether the mapping of attributes for edges is complete, and fits with the current DataFrame columns.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: Whether or not the current attribute mapping is valid.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">df_cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
+        <span class="n">mapping_keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_edgeAttributeMapping</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">attrs</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">EdgeAttribute</span><span class="p">]</span>
+        
+        <span class="k">return</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">,</span> <span class="n">DataFrame</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mapping_keys</span><span class="p">,</span> <span class="n">attrs</span><span class="p">))</span>
+                <span class="ow">and</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="n">e</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df_cols</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_edgeAttributeMapping</span><span class="o">.</span><span class="n">values</span><span class="p">()))))</span></div></div>
+    <span class="c1"># END hasValidEdgeAttributeMapping</span>
+<span class="c1"># END Graph</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Author.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

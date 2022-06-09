@@ -1,0 +1,218 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>m4i_analytics.m4i.ApiUtils &#8212; analytics-library  documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for m4i_analytics.m4i.ApiUtils</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">Enum</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<div class="viewcode-block" id="ContentType"><a class="viewcode-back" href="../../../m4i_analytics.m4i.html#m4i_analytics.m4i.ApiUtils.ContentType">[docs]</a><span class="k">class</span> <span class="nc">ContentType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class enumerates various content types. Use these values to specify what kind of result you expect from your request.</span>
+<span class="sd">    &quot;&quot;&quot;</span>  
+      
+    <span class="n">TEXT</span> <span class="o">=</span> <span class="s1">&#39;text&#39;</span>
+    <span class="n">JSON</span> <span class="o">=</span> <span class="s1">&#39;json&#39;</span>
+    <span class="n">BINARY</span> <span class="o">=</span> <span class="s1">&#39;binary&#39;</span>
+    <span class="n">RAW</span> <span class="o">=</span> <span class="s1">&#39;raw&#39;</span>
+    
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">is_valid</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check whether the provided value matches with one of the defined content types</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: bool: whether or not the provided value is a defined content type</span>
+<span class="sd">      </span>
+<span class="sd">        :param any value: The value you want to check against the defined content types        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">ContentType</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span><span class="n">value</span> <span class="o">==</span> <span class="n">item</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">cls</span><span class="p">)</span></div>
+    <span class="c1">#END is_valid</span>
+<span class="c1">#END ContentType</span>
+
+<div class="viewcode-block" id="ApiUtils"><a class="viewcode-back" href="../../../m4i_analytics.m4i.html#m4i_analytics.m4i.ApiUtils.ApiUtils">[docs]</a><span class="k">class</span> <span class="nc">ApiUtils</span><span class="p">():</span>
+    
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class provides various utility functions for API classes that connect with Models4Insight.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">__API_USER</span> <span class="o">=</span> <span class="s1">&#39;p&#39;</span>    
+    
+<div class="viewcode-block" id="ApiUtils.get"><a class="viewcode-back" href="../../../m4i_analytics.m4i.html#m4i_analytics.m4i.ApiUtils.ApiUtils.get">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">contentType</span><span class="o">=</span><span class="n">ContentType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make a HTTP GET request with the given parameters to the given url. Specify what kind of result you expect by providing the content type.</span>
+<span class="sd">           </span>
+<span class="sd">        :returns: The response of the server, parsed to the specified content type (TEXT by default).</span>
+
+<span class="sd">        :param str url: The url to which the request will be made.</span>
+<span class="sd">        :param dict params: *Optional*. The parameters to provide with the request. By default, no parameters will be provided.</span>
+<span class="sd">        :param ContentType contentType: *Optional*. The type of result you are expecting. By default, the content type is set to TEXT.</span>
+<span class="sd">            </span>
+<span class="sd">        :exception TypeError: Thrown when the url, params and/or contentType are not defined.</span>
+<span class="sd">        :exception ValueError: Thrown when the url, params and/or contentType are not valid.</span>
+<span class="sd">        :exception requests.exceptions.HTTPError: Thrown when the request returned with a 400/500 code variant.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="n">url</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Request URL is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Request URL is not valid&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Params is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Params is not valid&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">contentType</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Content type is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">ContentType</span><span class="o">.</span><span class="n">is_valid</span><span class="p">(</span><span class="n">contentType</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Content type is not valid&#39;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">contentType</span><span class="p">,</span> <span class="n">ContentType</span><span class="p">):</span>
+            <span class="n">contentType</span> <span class="o">=</span> <span class="n">contentType</span><span class="o">.</span><span class="n">value</span>
+        
+        <span class="k">return</span> <span class="n">ApiUtils</span><span class="o">.</span><span class="n">_handle_response</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">),</span> <span class="n">contentType</span><span class="p">)</span></div>
+    <span class="c1">#END get</span>
+    
+<div class="viewcode-block" id="ApiUtils.post"><a class="viewcode-back" href="../../../m4i_analytics.m4i.html#m4i_analytics.m4i.ApiUtils.ApiUtils.post">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{},</span> <span class="n">contentType</span><span class="o">=</span><span class="n">ContentType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make a HTTP POST request with the given data to the given url. Specify what kind of result you expect by providing the content type.</span>
+
+<span class="sd">        :returns: The response of the server, parsed to the specified content type (TEXT by default).</span>
+
+<span class="sd">        :param str url: The url to which the request will be made</span>
+<span class="sd">        :param dict data: *Optional*. The data to provide with the request. By default, no data will be provided.</span>
+<span class="sd">        :param ContentType contentType: *Optional*. The type of result you are expecting. By default, the content type is set to TEXT.</span>
+<span class="sd">            </span>
+<span class="sd">        :exception TypeError: Thrown when the url, data and/or contentType are not defined</span>
+<span class="sd">        :exception ValueError: Thrown when the url, data and/or contentType are not valid</span>
+<span class="sd">        :exception requests.exceptions.HTTPError: Thrown when the request returned with a 400/500 code variant</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="n">url</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Request URL is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Request URL is not valid&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Data is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Data is not valid&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">contentType</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Content type is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">ContentType</span><span class="o">.</span><span class="n">is_valid</span><span class="p">(</span><span class="n">contentType</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Content type is not valid&#39;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">contentType</span><span class="p">,</span> <span class="n">ContentType</span><span class="p">):</span>
+            <span class="n">contentType</span> <span class="o">=</span> <span class="n">contentType</span><span class="o">.</span><span class="n">value</span>
+        
+        <span class="k">return</span> <span class="n">ApiUtils</span><span class="o">.</span><span class="n">_handle_response</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">),</span> <span class="n">contentType</span><span class="p">)</span></div>
+    <span class="c1">#END post</span>
+        
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_handle_response</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">contentType</span><span class="p">):</span>
+    
+        <span class="k">if</span> <span class="n">response</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;HTTP response is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">requests</span><span class="o">.</span><span class="n">Response</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;HTTP response is not valid&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">contentType</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Content type is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">ContentType</span><span class="o">.</span><span class="n">is_valid</span><span class="p">(</span><span class="n">contentType</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Content type is not valid&#39;</span><span class="p">)</span>  
+        
+        <span class="c1">#Raises an exception if the response code is a 400/500 code (or a variant thereof)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>   
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="k">if</span> <span class="n">contentType</span> <span class="o">==</span> <span class="n">ContentType</span><span class="o">.</span><span class="n">TEXT</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span>
+        
+        <span class="k">if</span> <span class="n">contentType</span> <span class="o">==</span> <span class="n">ContentType</span><span class="o">.</span><span class="n">JSON</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+            
+        <span class="k">if</span> <span class="n">contentType</span> <span class="o">==</span> <span class="n">ContentType</span><span class="o">.</span><span class="n">BINARY</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span>
+        
+        <span class="k">if</span> <span class="n">contentType</span> <span class="o">==</span> <span class="n">ContentType</span><span class="o">.</span><span class="n">RAW</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>         
+        
+        <span class="k">return</span> <span class="n">result</span>            </div>
+    <span class="c1">#END _handle_response    </span>
+<span class="c1">#END ApiUtils  </span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Author.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

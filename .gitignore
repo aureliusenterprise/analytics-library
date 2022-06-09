@@ -1,0 +1,16 @@
+**/*.pyc
+**/conf.py
+**doc/_build
+**doc/build
+**/Makefile
+**/source/m4i*.rst
+**/source/module.rst
+**/source/setup.rst
+**/*.log
+build/
+dist/
+m4i_analytics.egg-info/
+m4i_analytics/examples/archisurance_cluster2\.lp\.csv
+m4i*config.py
+**/auth_options.py
+.spyproject/

@@ -1,0 +1,116 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>m4i_analytics.graphs.GraphComplexity &#8212; analytics-library  documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for m4i_analytics.graphs.GraphComplexity</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">m4i_analytics.graphs.model.Graph</span> <span class="k">import</span> <span class="n">EdgeAttribute</span><span class="p">,</span> <span class="n">NodeAttribute</span>
+
+<div class="viewcode-block" id="GraphComplexity"><a class="viewcode-back" href="../../../m4i_analytics.graphs.html#m4i_analytics.graphs.GraphComplexity.GraphComplexity">[docs]</a><span class="k">class</span> <span class="nc">GraphComplexity</span><span class="p">():</span>
+    
+<div class="viewcode-block" id="GraphComplexity.number_of_nodes"><a class="viewcode-back" href="../../../m4i_analytics.graphs.html#m4i_analytics.graphs.GraphComplexity.GraphComplexity.number_of_nodes">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">number_of_nodes</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">)</span></div>
+    <span class="c1"># END number_of_nodes</span>
+    
+<div class="viewcode-block" id="GraphComplexity.number_of_edges"><a class="viewcode-back" href="../../../m4i_analytics.graphs.html#m4i_analytics.graphs.GraphComplexity.GraphComplexity.number_of_edges">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">number_of_edges</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span></div>
+    <span class="c1"># END number_of_edges</span>
+    
+<div class="viewcode-block" id="GraphComplexity.number_of_node_types"><a class="viewcode-back" href="../../../m4i_analytics.graphs.html#m4i_analytics.graphs.GraphComplexity.GraphComplexity.number_of_node_types">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">number_of_node_types</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="n">graph</span><span class="o">.</span><span class="n">getNodeAttributeMapping</span><span class="p">(</span><span class="n">NodeAttribute</span><span class="o">.</span><span class="n">TYPE</span><span class="p">)))</span></div>
+    <span class="c1"># END number_of_node_types</span>
+    
+<div class="viewcode-block" id="GraphComplexity.number_of_edge_types"><a class="viewcode-back" href="../../../m4i_analytics.graphs.html#m4i_analytics.graphs.GraphComplexity.GraphComplexity.number_of_edge_types">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">number_of_edge_types</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="n">graph</span><span class="o">.</span><span class="n">getEdgeAttributeMapping</span><span class="p">(</span><span class="n">EdgeAttribute</span><span class="o">.</span><span class="n">TYPE</span><span class="p">)))</span></div>
+    <span class="c1"># END number_of_edge_types</span>
+    
+<div class="viewcode-block" id="GraphComplexity.model_heterogeneity"><a class="viewcode-back" href="../../../m4i_analytics.graphs.html#m4i_analytics.graphs.GraphComplexity.GraphComplexity.model_heterogeneity">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">model_heterogeneity</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the similarity of the nodes and edges in a model relative to one another (heterogeneity). Entropy is used as a measure of heterogeneity.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: The heterogeneity of the model</span>
+<span class="sd">        :rtype: double</span>
+<span class="sd">        </span>
+<span class="sd">        :param Graph graph: The graph for which to calculate its heterogeneity        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div></div>
+    <span class="c1"># END model_heterogeneity</span>
+    
+<span class="c1"># END GraphComplexity</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Author.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

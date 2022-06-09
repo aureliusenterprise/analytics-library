@@ -1,0 +1,189 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>m4i_analytics.graphs.visualisations package &#8212; analytics-library  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="m4i_analytics.img package" href="m4i_analytics.img.html" />
+    <link rel="prev" title="m4i_analytics.graphs.model package" href="m4i_analytics.graphs.model.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="m4i-analytics-graphs-visualisations-package">
+<h1>m4i_analytics.graphs.visualisations package<a class="headerlink" href="#m4i-analytics-graphs-visualisations-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-m4i_analytics.graphs.visualisations.GraphPlotter">
+<span id="m4i-analytics-graphs-visualisations-graphplotter-module"></span><h2>m4i_analytics.graphs.visualisations.GraphPlotter module<a class="headerlink" href="#module-m4i_analytics.graphs.visualisations.GraphPlotter" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="m4i_analytics.graphs.visualisations.GraphPlotter.GraphPlotter">
+<em class="property">class </em><code class="descclassname">m4i_analytics.graphs.visualisations.GraphPlotter.</code><code class="descname">GraphPlotter</code><a class="reference internal" href="_modules/m4i_analytics/graphs/visualisations/GraphPlotter.html#GraphPlotter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#m4i_analytics.graphs.visualisations.GraphPlotter.GraphPlotter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="staticmethod">
+<dt id="m4i_analytics.graphs.visualisations.GraphPlotter.GraphPlotter.visualize">
+<em class="property">static </em><code class="descname">visualize</code><span class="sig-paren">(</span><em>arrows=False</em>, <em>center_x=0</em>, <em>center_y=0</em>, <em>edge_alpha=1</em>, <em>edge_width=1</em>, <em>font_family='sans_serif'</em>, <em>font_size=8</em>, <em>layout=&lt;Layout.RANDOM: 3&gt;</em>, <em>node_alpha=1</em>, <em>node_color='black'</em>, <em>node_distance=None</em>, <em>node_shape='o'</em>, <em>node_size=100</em>, <em>scale=100</em>, <em>shell_list=None</em>, <em>weight_attr=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/m4i_analytics/graphs/visualisations/GraphPlotter.html#GraphPlotter.visualize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#m4i_analytics.graphs.visualisations.GraphPlotter.GraphPlotter.visualize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render a visualization of your graph. This function opens a matplot dialog that renders the visualization. You can optionally specify the layout algorithm, as well as other parameters to customize the way your graph looks.
+:rtype: None</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>graph</strong> (<a class="reference internal" href="m4i_analytics.graphs.model.html#m4i_analytics.graphs.model.Graph.Graph" title="m4i_analytics.graphs.model.Graph.Graph"><em>Graph</em></a>) – The graph you want to display</li>
+<li><strong>arrows</strong> (<em>bool</em>) – <em>Optional</em>. Whether your edges should have arrow heads (source -&gt; target). Defaults to False.</li>
+<li><strong>center_x</strong> (<em>int</em>) – <em>Optional</em>. The center of your graph along the x axis. Use this to offset your graph horizontally. Defaults to 0.</li>
+<li><strong>center_y</strong> (<em>int</em>) – <em>Optional</em>. The center of your graph along the y axis. Use this to offset your graph vertically. Defaults to 0.</li>
+<li><strong>edge_alpha</strong> (<em>double</em>) – <em>Optional</em>. Specify the opacity of your edges on a scale between 0 to 1. Defaults to 1.</li>
+<li><strong>edge_width</strong> (<em>int</em>) – <em>Optional</em>. The width of the edges in the graph. Defaults to 1.</li>
+<li><strong>font_family</strong> (<em>str</em>) – <em>Optional</em>. The font family in which to render the labels of the graph. Defaults to ‘sans_serif.</li>
+<li><strong>font_size</strong> (<em>int</em>) – <em>Optional</em>. The font size in which to render the labels of the graph. Defaults to 8.</li>
+<li><strong>layout</strong> (<a class="reference internal" href="#m4i_analytics.graphs.visualisations.GraphPlotter.Layout" title="m4i_analytics.graphs.visualisations.GraphPlotter.Layout"><em>Layout</em></a>) – <em>Optional</em>. The layout algorithm to use for rendering the graph. Defaults to Layout.RANDOM.</li>
+<li><strong>nodes_alpha</strong> (<em>double</em>) – <em>Optional</em>. Specify the opacity of your nodes on a scale between 0 to 1. Defaults to 1.</li>
+<li><strong>node_color</strong> (<em>str</em>) – <em>Optional</em>. The color in which to render the nodes. Defaults to “black”.</li>
+<li><strong>node_distance</strong> (<em>any</em>) – <em>Optional</em>. Some layout algorithms allow you to specify the optimal distance between nodes. For the Fruchterman Reingold layout, this parameter should be an integer. For the Kamada Kawai layout, this parameter should be a two-level dict of optimal distances, indexed by source and destination nodes. Defaults to None.</li>
+<li><strong>node_shape</strong> (<em>str</em>) – <em>Optional</em>. The shape in which to render the nodes. Defaults to “o”.</li>
+<li><strong>node_size</strong> (<em>int</em>) – <em>Optional</em>. The size in which to render the nodes. Defaults to 250.</li>
+<li><strong>scale</strong> (<em>int</em>) – <em>Optional</em>. The scale at which to render the graph. Defaults to 100.</li>
+<li><strong>shell_list</strong> (<em>array</em>) – <em>Optional</em>. A two-dimensional array of node id’s specifying which node should be rendered at which level of the graph. Defaults to None.</li>
+<li><strong>weight_attr</strong> (<em>str</em>) – <em>Optional</em>. The name of the attribute that defines the weight of the edges in your graph. This is used with the Kamada Kawai and Spectral layouts. Defaults to None.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="m4i_analytics.graphs.visualisations.GraphPlotter.Layout">
+<em class="property">class </em><code class="descclassname">m4i_analytics.graphs.visualisations.GraphPlotter.</code><code class="descname">Layout</code><a class="reference internal" href="_modules/m4i_analytics/graphs/visualisations/GraphPlotter.html#Layout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#m4i_analytics.graphs.visualisations.GraphPlotter.Layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<dl class="attribute">
+<dt id="m4i_analytics.graphs.visualisations.GraphPlotter.Layout.CIRCULAR">
+<code class="descname">CIRCULAR</code><em class="property"> = 0</em><a class="headerlink" href="#m4i_analytics.graphs.visualisations.GraphPlotter.Layout.CIRCULAR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="m4i_analytics.graphs.visualisations.GraphPlotter.Layout.FRUCHTERMAN_REINGOLD">
+<code class="descname">FRUCHTERMAN_REINGOLD</code><em class="property"> = 1</em><a class="headerlink" href="#m4i_analytics.graphs.visualisations.GraphPlotter.Layout.FRUCHTERMAN_REINGOLD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="m4i_analytics.graphs.visualisations.GraphPlotter.Layout.KAMADA_KAWAI">
+<code class="descname">KAMADA_KAWAI</code><em class="property"> = 2</em><a class="headerlink" href="#m4i_analytics.graphs.visualisations.GraphPlotter.Layout.KAMADA_KAWAI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="m4i_analytics.graphs.visualisations.GraphPlotter.Layout.RANDOM">
+<code class="descname">RANDOM</code><em class="property"> = 3</em><a class="headerlink" href="#m4i_analytics.graphs.visualisations.GraphPlotter.Layout.RANDOM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="m4i_analytics.graphs.visualisations.GraphPlotter.Layout.SHELL">
+<code class="descname">SHELL</code><em class="property"> = 4</em><a class="headerlink" href="#m4i_analytics.graphs.visualisations.GraphPlotter.Layout.SHELL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="m4i_analytics.graphs.visualisations.GraphPlotter.Layout.SPECTRAL">
+<code class="descname">SPECTRAL</code><em class="property"> = 5</em><a class="headerlink" href="#m4i_analytics.graphs.visualisations.GraphPlotter.Layout.SPECTRAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-m4i_analytics.graphs.visualisations">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-m4i_analytics.graphs.visualisations" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">m4i_analytics.graphs.visualisations package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-m4i_analytics.graphs.visualisations.GraphPlotter">m4i_analytics.graphs.visualisations.GraphPlotter module</a></li>
+<li><a class="reference internal" href="#module-m4i_analytics.graphs.visualisations">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="m4i_analytics.html">m4i_analytics package</a><ul>
+  <li><a href="m4i_analytics.graphs.html">m4i_analytics.graphs package</a><ul>
+      <li>Previous: <a href="m4i_analytics.graphs.model.html" title="previous chapter">m4i_analytics.graphs.model package</a></li>
+      <li>Next: <a href="m4i_analytics.img.html" title="next chapter">m4i_analytics.img package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/m4i_analytics.graphs.visualisations.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Author.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/m4i_analytics.graphs.visualisations.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

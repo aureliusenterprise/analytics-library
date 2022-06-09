@@ -1,0 +1,317 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>m4i_analytics.graphs.model package &#8212; analytics-library  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="m4i_analytics.graphs.visualisations package" href="m4i_analytics.graphs.visualisations.html" />
+    <link rel="prev" title="m4i_analytics.graphs.languages.uml.metamodel package" href="m4i_analytics.graphs.languages.uml.metamodel.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="m4i-analytics-graphs-model-package">
+<h1>m4i_analytics.graphs.model package<a class="headerlink" href="#m4i-analytics-graphs-model-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-m4i_analytics.graphs.model.Graph">
+<span id="m4i-analytics-graphs-model-graph-module"></span><h2>m4i_analytics.graphs.model.Graph module<a class="headerlink" href="#module-m4i_analytics.graphs.model.Graph" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="m4i_analytics.graphs.model.Graph.EdgeAttribute">
+<em class="property">class </em><code class="descclassname">m4i_analytics.graphs.model.Graph.</code><code class="descname">EdgeAttribute</code><a class="reference internal" href="_modules/m4i_analytics/graphs/model/Graph.html#EdgeAttribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#m4i_analytics.graphs.model.Graph.EdgeAttribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>This class enumerates the keys to the node properties that need to be mapped for standardized analytics functions</p>
+<dl class="attribute">
+<dt id="m4i_analytics.graphs.model.Graph.EdgeAttribute.ID">
+<code class="descname">ID</code><em class="property"> = 'id'</em><a class="headerlink" href="#m4i_analytics.graphs.model.Graph.EdgeAttribute.ID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="m4i_analytics.graphs.model.Graph.EdgeAttribute.LABEL">
+<code class="descname">LABEL</code><em class="property"> = 'label'</em><a class="headerlink" href="#m4i_analytics.graphs.model.Graph.EdgeAttribute.LABEL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="m4i_analytics.graphs.model.Graph.EdgeAttribute.NAME">
+<code class="descname">NAME</code><em class="property"> = 'name'</em><a class="headerlink" href="#m4i_analytics.graphs.model.Graph.EdgeAttribute.NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="m4i_analytics.graphs.model.Graph.EdgeAttribute.SOURCE">
+<code class="descname">SOURCE</code><em class="property"> = 'source'</em><a class="headerlink" href="#m4i_analytics.graphs.model.Graph.EdgeAttribute.SOURCE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="m4i_analytics.graphs.model.Graph.EdgeAttribute.TARGET">
+<code class="descname">TARGET</code><em class="property"> = 'target'</em><a class="headerlink" href="#m4i_analytics.graphs.model.Graph.EdgeAttribute.TARGET" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="m4i_analytics.graphs.model.Graph.EdgeAttribute.TYPE">
+<code class="descname">TYPE</code><em class="property"> = 'type'</em><a class="headerlink" href="#m4i_analytics.graphs.model.Graph.EdgeAttribute.TYPE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="m4i_analytics.graphs.model.Graph.Graph">
+<em class="property">class </em><code class="descclassname">m4i_analytics.graphs.model.Graph.</code><code class="descname">Graph</code><span class="sig-paren">(</span><em>id</em>, <em>nodes=None</em>, <em>edges=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/m4i_analytics/graphs/model/Graph.html#Graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#m4i_analytics.graphs.model.Graph.Graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class represents a generic graph that can be used in various standardized analytics functions. The sets of nodes and edges are represented as Pandas DataFrames. To use your custom dataframes with standardized analytics functions, please map your columns to the attributes as specified in the respective enums.</p>
+<dl class="method">
+<dt id="m4i_analytics.graphs.model.Graph.Graph.getEdgeAttributeMapping">
+<code class="descname">getEdgeAttributeMapping</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/m4i_analytics/graphs/model/Graph.html#Graph.getEdgeAttributeMapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#m4i_analytics.graphs.model.Graph.Graph.getEdgeAttributeMapping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the name of the DataFrame column that contains a particular edge property. If the property has not been mapped, this returns None.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the name of the DataFrame column that contains a particular edge property.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> (<em>str</em>) – The lookup name of the property</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="m4i_analytics.graphs.model.Graph.Graph.getNodeAttributeMapping">
+<code class="descname">getNodeAttributeMapping</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/m4i_analytics/graphs/model/Graph.html#Graph.getNodeAttributeMapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#m4i_analytics.graphs.model.Graph.Graph.getNodeAttributeMapping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the name of the DataFrame column that contains a particular node property. If the property has not been mapped, this returns None.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the name of the DataFrame column that contains a particular node property.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> (<em>str</em>) – The lookup name of the property</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="m4i_analytics.graphs.model.Graph.Graph.hasValidAttributeMapping">
+<code class="descname">hasValidAttributeMapping</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/m4i_analytics/graphs/model/Graph.html#Graph.hasValidAttributeMapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#m4i_analytics.graphs.model.Graph.Graph.hasValidAttributeMapping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether the mapping of attributes for nodes and edges is complete, and fits with the current DataFrame columns.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Whether or not the current attribute mapping is valid.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="m4i_analytics.graphs.model.Graph.Graph.hasValidEdgeAttributeMapping">
+<code class="descname">hasValidEdgeAttributeMapping</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/m4i_analytics/graphs/model/Graph.html#Graph.hasValidEdgeAttributeMapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#m4i_analytics.graphs.model.Graph.Graph.hasValidEdgeAttributeMapping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether the mapping of attributes for edges is complete, and fits with the current DataFrame columns.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Whether or not the current attribute mapping is valid.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="m4i_analytics.graphs.model.Graph.Graph.hasValidNodeAttributeMapping">
+<code class="descname">hasValidNodeAttributeMapping</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/m4i_analytics/graphs/model/Graph.html#Graph.hasValidNodeAttributeMapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#m4i_analytics.graphs.model.Graph.Graph.hasValidNodeAttributeMapping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether the mapping of attributes for nodes is complete, and fits with the current DataFrame columns.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Whether or not the current attribute mapping is valid.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="m4i_analytics.graphs.model.Graph.Graph.putEdgeAttributeMapping">
+<code class="descname">putEdgeAttributeMapping</code><span class="sig-paren">(</span><em>key</em>, <em>ref</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/m4i_analytics/graphs/model/Graph.html#Graph.putEdgeAttributeMapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#m4i_analytics.graphs.model.Graph.Graph.putEdgeAttributeMapping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new edge property mapping or override an existing one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> (<em>str</em>) – The lookup name of the property</li>
+<li><strong>ref</strong> (<em>str</em>) – The name of the DataFrame column that contains the property value</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><strong>TypeError</strong> – Thrown when there is no edge DataFrame associated with this graph</li>
+<li><strong>ValueError</strong> – Thrown when the column name reference does not exist in the DataFrame</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="m4i_analytics.graphs.model.Graph.Graph.putNodeAttributeMapping">
+<code class="descname">putNodeAttributeMapping</code><span class="sig-paren">(</span><em>key</em>, <em>ref</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/m4i_analytics/graphs/model/Graph.html#Graph.putNodeAttributeMapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#m4i_analytics.graphs.model.Graph.Graph.putNodeAttributeMapping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new node property mapping or override an existing one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> (<em>str</em>) – The lookup name of the property</li>
+<li><strong>ref</strong> (<em>str</em>) – The name of the DataFrame column that contains the property value</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><strong>TypeError</strong> – Thrown when there is no nodes DataFrame associated with this graph</li>
+<li><strong>ValueError</strong> – Thrown when the column name reference does not exist in the DataFrame</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="m4i_analytics.graphs.model.Graph.NodeAttribute">
+<em class="property">class </em><code class="descclassname">m4i_analytics.graphs.model.Graph.</code><code class="descname">NodeAttribute</code><a class="reference internal" href="_modules/m4i_analytics/graphs/model/Graph.html#NodeAttribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#m4i_analytics.graphs.model.Graph.NodeAttribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>This class enumerates the keys to the node properties that need to be mapped for standardized analytics functions</p>
+<dl class="attribute">
+<dt id="m4i_analytics.graphs.model.Graph.NodeAttribute.ID">
+<code class="descname">ID</code><em class="property"> = 'id'</em><a class="headerlink" href="#m4i_analytics.graphs.model.Graph.NodeAttribute.ID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="m4i_analytics.graphs.model.Graph.NodeAttribute.LABEL">
+<code class="descname">LABEL</code><em class="property"> = 'label'</em><a class="headerlink" href="#m4i_analytics.graphs.model.Graph.NodeAttribute.LABEL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="m4i_analytics.graphs.model.Graph.NodeAttribute.NAME">
+<code class="descname">NAME</code><em class="property"> = 'name'</em><a class="headerlink" href="#m4i_analytics.graphs.model.Graph.NodeAttribute.NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="m4i_analytics.graphs.model.Graph.NodeAttribute.TYPE">
+<code class="descname">TYPE</code><em class="property"> = 'type'</em><a class="headerlink" href="#m4i_analytics.graphs.model.Graph.NodeAttribute.TYPE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-m4i_analytics.graphs.model">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-m4i_analytics.graphs.model" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">m4i_analytics.graphs.model package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-m4i_analytics.graphs.model.Graph">m4i_analytics.graphs.model.Graph module</a></li>
+<li><a class="reference internal" href="#module-m4i_analytics.graphs.model">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="m4i_analytics.html">m4i_analytics package</a><ul>
+  <li><a href="m4i_analytics.graphs.html">m4i_analytics.graphs package</a><ul>
+      <li>Previous: <a href="m4i_analytics.graphs.languages.uml.metamodel.html" title="previous chapter">m4i_analytics.graphs.languages.uml.metamodel package</a></li>
+      <li>Next: <a href="m4i_analytics.graphs.visualisations.html" title="next chapter">m4i_analytics.graphs.visualisations package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/m4i_analytics.graphs.model.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Author.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/m4i_analytics.graphs.model.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

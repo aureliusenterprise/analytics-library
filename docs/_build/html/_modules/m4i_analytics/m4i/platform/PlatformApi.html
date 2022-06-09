@@ -1,0 +1,544 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>m4i_analytics.m4i.platform.PlatformApi &#8212; analytics-library  documentation</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for m4i_analytics.m4i.platform.PlatformApi</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">m4i_analytics.m4i.ApiUtils</span> <span class="k">import</span> <span class="n">ApiUtils</span><span class="p">,</span> <span class="n">ContentType</span>
+<span class="kn">from</span> <span class="nn">m4i_analytics.m4i.platform.model.ModelQuery</span> <span class="k">import</span> <span class="n">ModelQuery</span> 
+<span class="kn">from</span> <span class="nn">m4i_analytics.m4i.platform.model.ModelProvenance</span> <span class="k">import</span> <span class="n">ModelProvenance</span>
+<span class="kn">from</span> <span class="nn">m4i_analytics.m4i.platform.model.ModelCommit</span> <span class="k">import</span> <span class="n">ModelCommit</span>
+<span class="kn">from</span> <span class="nn">m4i_analytics.m4i.platform.model.Project</span> <span class="k">import</span> <span class="n">Project</span>
+
+<span class="kn">import</span> <span class="nn">m4i_analytics.m4i.platform.config</span> <span class="k">as</span> <span class="nn">config</span>
+
+
+<div class="viewcode-block" id="PlatformApi"><a class="viewcode-back" href="../../../../m4i_analytics.m4i.platform.html#m4i_analytics.m4i.platform.PlatformApi.PlatformApi">[docs]</a><span class="k">class</span> <span class="nc">PlatformApi</span><span class="p">():</span>
+    
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class implements various API calls to functions provided by the M4I platform </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="PlatformApi.retrieve_project"><a class="viewcode-back" href="../../../../m4i_analytics.m4i.platform.html#m4i_analytics.m4i.platform.PlatformApi.PlatformApi.retrieve_project">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">retrieve_project</span><span class="p">(</span><span class="n">projectid</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve a project for the given ID from the M4I repository</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: A Project instance representing the project with the given ID</span>
+<span class="sd">        :rtype: Project</span>
+<span class="sd">        </span>
+<span class="sd">        :param str projectid: The ID of the project you wish to retrieve</span>
+<span class="sd">        </span>
+<span class="sd">        :exception TypeError: Thrown when projectid is not defined or when the query result could not be parsed into a ModelCommit instance.</span>
+<span class="sd">        :exception ValueError: Thrown when projectid is not valid or when the query result could otherwise not be parsed.</span>
+<span class="sd">        :exception requests.exceptions.HTTPError: Thrown when the request returned with a 400/500 code variant.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="n">projectid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Projectid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">projectid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Projectid should be a string&#39;</span><span class="p">)</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="n">ApiUtils</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">PROJECT_DETAILS_ENDPOINT</span><span class="p">,</span> <span class="n">projectid</span><span class="p">),</span> <span class="n">contentType</span><span class="o">=</span><span class="n">ContentType</span><span class="o">.</span><span class="n">JSON</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">Project</span><span class="p">(</span><span class="o">**</span><span class="n">result</span><span class="p">)</span></div>
+
+    <span class="c1"># END retrieve_project</span>
+    
+<div class="viewcode-block" id="PlatformApi.retrieve_model"><a class="viewcode-back" href="../../../../m4i_analytics.m4i.platform.html#m4i_analytics.m4i.platform.PlatformApi.PlatformApi.retrieve_model">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">retrieve_model</span><span class="p">(</span><span class="n">branchName</span><span class="p">,</span> <span class="n">projectName</span><span class="p">,</span> <span class="n">userid</span><span class="p">,</span> <span class="n">contentType</span><span class="o">=</span><span class="s2">&quot;archimate&quot;</span><span class="p">,</span> <span class="n">modelid</span><span class="o">=</span><span class="s2">&quot;TRUNK&quot;</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parserName</span><span class="o">=</span><span class="s2">&quot;archimate3&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve a model with the given parameters from the M4I repository.</span>
+
+<span class="sd">        :returns: A string representation of the model that fits the parameters, parsed to the specified content type (archimate by default).</span>
+<span class="sd">        :rtype: str</span>
+
+<span class="sd">        :param str branchName: The name of the branch containing the model you wish to retrieve.</span>
+<span class="sd">        :param str projectName: The name of the project containing the model you wish to retrieve.</span>
+<span class="sd">        :param str userid: The id of the user retrieving the model.</span>
+<span class="sd">        :param str contentType: *Optional*. The format in which you wish to retrieve the model. Valid options are: &#39;archimate&#39;, &#39;json&#39; and &#39;xml&#39;. Default is &#39;archimate&#39;.</span>
+<span class="sd">        :param str modelid: *Optional*. The id of the model you wish to retrieve. You can use this e.g. to retrieve a version of a model before conflicts were resolved. Default is &#39;TRUNK&#39;.</span>
+<span class="sd">        :param str module: *Optional*. The name of the module you wish to retrieve. By leaving this empty, you retrieve the whole model. Default is empty.</span>
+<span class="sd">        :param str parserName: *Optional*. The name of the meta-model of the model you wish to retrieve. Currently, the only valid option is &#39;archimate3&#39;. Default is &#39;archimate3&#39;.</span>
+<span class="sd">        :param long version: *Optional*. The timestamp of the version of the model you wish to retrieve. By leaving this empty, you retrieve the latest version. Default is empty. </span>
+<span class="sd">        </span>
+<span class="sd">        :exception TypeError: Thrown when any of the parameters (excluding module and version) is not defined.</span>
+<span class="sd">        :exception ValueError: Thrown when any of the parameters is not valid.</span>
+<span class="sd">        :exception requests.exceptions.HTTPError: Thrown when the request returned with a 400/500 code variant.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="n">branchName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;BranchName is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">branchName</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;BranchName should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">projectName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;ProjectName is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">projectName</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;ProjectName should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">userid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Userid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">userid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Userid should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">contentType</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;ContentType is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">contentType</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;ContentType should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">modelid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Modelid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">modelid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Modelid should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">module</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">module</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Module should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">parserName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;ParserName is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">parserName</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;ParserName should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">version</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="n">long</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Version should be a long&#39;</span><span class="p">)</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="n">ApiUtils</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">RETRIEVE_MODEL_ENDPOINT</span><span class="p">,</span> <span class="n">contentType</span><span class="o">=</span><span class="n">ContentType</span><span class="o">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;branchName&quot;</span><span class="p">:</span> <span class="n">branchName</span><span class="p">,</span>
+            <span class="s2">&quot;contentType&quot;</span><span class="p">:</span> <span class="n">contentType</span><span class="p">,</span>
+            <span class="s2">&quot;modelId&quot;</span><span class="p">:</span> <span class="n">modelid</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="n">module</span><span class="p">,</span>
+            <span class="s2">&quot;parserName&quot;</span><span class="p">:</span> <span class="n">parserName</span><span class="p">,</span>
+            <span class="s2">&quot;projectName&quot;</span><span class="p">:</span> <span class="n">projectName</span><span class="p">,</span>
+            <span class="s2">&quot;userid&quot;</span><span class="p">:</span> <span class="n">userid</span><span class="p">,</span>
+            <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="n">version</span>
+        <span class="p">})</span>
+        
+        <span class="k">return</span> <span class="n">result</span> </div>
+    <span class="c1"># END retrieve_model</span>
+    
+<div class="viewcode-block" id="PlatformApi.commit_model"><a class="viewcode-back" href="../../../../m4i_analytics.m4i.platform.html#m4i_analytics.m4i.platform.PlatformApi.PlatformApi.commit_model">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">commit_model</span><span class="p">(</span><span class="n">branchName</span><span class="p">,</span> <span class="n">projectName</span><span class="p">,</span> <span class="n">userid</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">contentType</span><span class="o">=</span><span class="s2">&quot;archimate&quot;</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parserName</span><span class="o">=</span><span class="s2">&quot;archimate3&quot;</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Commit a model to the M4I repository.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: A ModelCommit instance describing the commit operation. Note that the commit happens asynchronously on the server side. You can monitor the progress via query_model requests.</span>
+<span class="sd">        :rtype: ModelCommit</span>
+
+<span class="sd">        :param str branchName: The name of the branch to which you want to commit the model.</span>
+<span class="sd">        :param str projectName: The name of the project to which you want to commit the model.</span>
+<span class="sd">        :param str userid: The id of the user committing the model.</span>
+<span class="sd">        :param str description: Describe the purpose of your commit.</span>
+<span class="sd">        :param file model: The file containing your model.</span>
+<span class="sd">        :param str contentType: *Optional*. The format in which you are committing the model. Valid options are: &#39;archimate&#39;, &#39;json&#39; and &#39;xml&#39;. Default is &#39;archimate&#39;.</span>
+<span class="sd">        :param str module: *Optional*. The name of the module to which you want to commit. You can also define new modules this way. By leaving this empty, you commit to the complete model. Default is empty.</span>
+<span class="sd">        :param str parserName: *Optional*. The name of the meta-model of the model you are committing. Currently, the only valid option is &#39;archimate3&#39;. Default is &#39;archimate3&#39;.</span>
+<span class="sd">       </span>
+<span class="sd">        :exception TypeError: Thrown when any of the parameters (excluding module) is not defined or when the query result could not be parsed into a ModelCommit instance.</span>
+<span class="sd">        :exception ValueError: Thrown when any of the parameters is not valid or when the query result could otherwise not be parsed.</span>
+<span class="sd">        :exception requests.exceptions.HTTPError: Thrown when the request returned with a 400/500 code variant.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="n">branchName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;BranchName is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">branchName</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;BranchName should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">projectName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;ProjectName is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">projectName</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;ProjectName should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">userid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Userid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">userid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Userid should be a string&#39;</span><span class="p">)</span> 
+        <span class="k">elif</span> <span class="n">description</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Description is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">description</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Description should be a string&#39;</span><span class="p">)</span> 
+        <span class="k">elif</span> <span class="n">model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Model is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Model should be a file&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">contentType</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;ContentType is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">contentType</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;ContentType should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">module</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">module</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Module should be a string&#39;</span><span class="p">)</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="n">ApiUtils</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">COMMIT_MODEL_ENDPOINT</span><span class="p">,</span> <span class="n">contentType</span><span class="o">=</span><span class="n">ContentType</span><span class="o">.</span><span class="n">JSON</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;parserName&quot;</span><span class="p">:</span> <span class="n">parserName</span><span class="p">,</span>
+            <span class="s2">&quot;toBranchName&quot;</span><span class="p">:</span> <span class="n">branchName</span><span class="p">,</span>
+            <span class="s2">&quot;projectName&quot;</span><span class="p">:</span> <span class="n">projectName</span><span class="p">,</span>
+            <span class="s2">&quot;userid&quot;</span><span class="p">:</span> <span class="n">userid</span><span class="p">,</span>
+            <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
+            <span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="n">model</span><span class="p">,</span>
+            <span class="s2">&quot;contentType&quot;</span><span class="p">:</span> <span class="n">contentType</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="n">module</span><span class="p">,</span>
+        <span class="p">})</span>
+        
+        <span class="k">return</span> <span class="n">ModelCommit</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+    <span class="c1"># END commit_model</span>
+    
+<div class="viewcode-block" id="PlatformApi.query_model"><a class="viewcode-back" href="../../../../m4i_analytics.m4i.platform.html#m4i_analytics.m4i.platform.PlatformApi.PlatformApi.query_model">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">query_model</span><span class="p">(</span><span class="n">projectName</span><span class="p">,</span> <span class="n">taskid</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check on the progress of a commit to the M4I repository. This request will tell you whether the commit is still in progress, completed, has encountered a conflict, or has failed for some other reason. You can use this function for both commit_model, clone_branch and commit_branch.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: A ModelQuery instance describing the status of the commit operation. If the commit encountered conflicts, the response will also include a list of all the conflicting changes.</span>
+<span class="sd">        :rtype: ModelQuery</span>
+<span class="sd">        </span>
+<span class="sd">        :param str projectName: The name of the project to which are committing the model.</span>
+<span class="sd">        :param str taskid: The id of the commit operation.</span>
+<span class="sd">                    </span>
+<span class="sd">        :exception TypeError: Thrown when any of the parameters is not defined or when the query result could not be parsed into a ModelQuery instance.</span>
+<span class="sd">        :exception ValueError: Thrown when any of the parameters is not valid or when the query result could otherwise not be parsed.</span>
+<span class="sd">        :exception requests.exceptions.HTTPError: Thrown when the request returned with a 400/500 code variant.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="n">projectName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;ProjectName is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">projectName</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;ProjectName should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">taskid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Taskid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">taskid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Taskid should be a string&#39;</span><span class="p">)</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="n">ApiUtils</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">QUERY_MODEL_ENDPOINT</span><span class="p">,</span> <span class="n">contentType</span><span class="o">=</span><span class="n">ContentType</span><span class="o">.</span><span class="n">JSON</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;projectName&quot;</span><span class="p">:</span> <span class="n">projectName</span><span class="p">,</span>
+            <span class="s2">&quot;taskId&quot;</span><span class="p">:</span> <span class="n">taskid</span> 
+        <span class="p">})</span>
+        
+        <span class="k">return</span> <span class="n">ModelQuery</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+    <span class="c1"># END query_model</span>
+    
+<div class="viewcode-block" id="PlatformApi.model_provenance"><a class="viewcode-back" href="../../../../m4i_analytics.m4i.platform.html#m4i_analytics.m4i.platform.PlatformApi.PlatformApi.model_provenance">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">model_provenance</span><span class="p">(</span><span class="n">projectName</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve a historic list of all operations on the model over time.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: An array containing ModelProvenance instances, describing historic events that occurred for the specified model.</span>
+<span class="sd">        :rtype: array&lt;ModelProvenance&gt;</span>
+<span class="sd">        </span>
+<span class="sd">        :param str projectName: The name of the project for which you want to retrieve the provenance.</span>
+
+<span class="sd">        :exception TypeError: Thrown when projectName is not defined or when the query response could not be parsed into ModelProvenance instances.</span>
+<span class="sd">        :exception ValueError: Thrown when projectName is not valid or when the query response could otherwise not be parsed.</span>
+<span class="sd">        :exception requests.exceptions.HTTPError: Thrown when the request returned with a 400/500 code variant.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="n">projectName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;ProjectName is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">projectName</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;ProjectName should be a string&#39;</span><span class="p">)</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="n">ApiUtils</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">MODEL_PROVENANCE_ENDPOINT</span><span class="p">,</span> <span class="n">contentType</span><span class="o">=</span><span class="n">ContentType</span><span class="o">.</span><span class="n">JSON</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;projectName&quot;</span><span class="p">:</span> <span class="n">projectName</span>
+        <span class="p">})</span>
+                
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">ModelProvenance</span><span class="p">(</span><span class="o">**</span><span class="n">i</span><span class="p">),</span> <span class="n">result</span><span class="p">)</span>        
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Query response is not a list&#39;</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">result</span></div>
+    <span class="c1"># END model_provenance</span>
+    
+<div class="viewcode-block" id="PlatformApi.clone_branch"><a class="viewcode-back" href="../../../../m4i_analytics.m4i.platform.html#m4i_analytics.m4i.platform.PlatformApi.PlatformApi.clone_branch">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">clone_branch</span><span class="p">(</span><span class="n">description</span><span class="p">,</span> <span class="n">projectName</span><span class="p">,</span> <span class="n">toBranch</span><span class="p">,</span> <span class="n">userid</span><span class="p">,</span> <span class="n">fromBranch</span><span class="o">=</span><span class="s2">&quot;MASTER&quot;</span><span class="p">,</span> <span class="n">parserName</span><span class="o">=</span><span class="s2">&quot;archimate3&quot;</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clone an existing branch of your model into a new branch.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: A ModelCommit instance describing the clone operation. Note that the clone happens asynchronously on the server side. You can monitor the progress via query_model requests.</span>
+<span class="sd">        :rtype: ModelCommit</span>
+<span class="sd">        </span>
+<span class="sd">        :param str description: Describe the purpose of this new branch.</span>
+<span class="sd">        :param str projectName: The name of the project for which you want to clone branches.</span>
+<span class="sd">        :param str toBranch: The name of your new branch.</span>
+<span class="sd">        :param str userid: The name of the user creating the new branch.</span>
+<span class="sd">        :param str fromBranch: *Optional*. The name of the branch you wish to clone. Default is &#39;MASTER&#39;.</span>
+<span class="sd">        :param str parserName: *Optional*. The name of the meta-model of the model that will be contained in your new branch. Currently, the only valid option is &#39;archimate3&#39;. Default is &#39;archimate3&#39;.</span>
+<span class="sd">            </span>
+<span class="sd">        :exception TypeError: Thrown when any of the parameters is not defined or when the query result could not be parsed into a ModelCommit instance.</span>
+<span class="sd">        :exception ValueError: Thrown when any of the parameters is not valid or when the query result could otherwise not be parsed.</span>
+<span class="sd">        :exception requests.exceptions.HTTPError: Thrown when the request returned with a 400/500 code variant.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="n">description</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Description is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">description</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Description should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">fromBranch</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;FromBranch is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">fromBranch</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;FromBranch should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">projectName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;ProjectName is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">projectName</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;ProjectName should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">toBranch</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;ToBranch is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">toBranch</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;ToBranch should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">userid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Userid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">userid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Userid should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">parserName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;ParserName is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">parserName</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;ParserName should be a string&#39;</span><span class="p">)</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="n">ApiUtils</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">CLONE_BRANCH_ENDPOINT</span><span class="p">,</span> <span class="n">contentType</span><span class="o">=</span><span class="n">ContentType</span><span class="o">.</span><span class="n">JSON</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
+            <span class="s2">&quot;fromBranch&quot;</span><span class="p">:</span> <span class="n">fromBranch</span><span class="p">,</span>
+            <span class="s2">&quot;parserName&quot;</span><span class="p">:</span> <span class="n">parserName</span><span class="p">,</span>
+            <span class="s2">&quot;projectName&quot;</span><span class="p">:</span> <span class="n">projectName</span><span class="p">,</span>
+            <span class="s2">&quot;toBranch&quot;</span><span class="p">:</span> <span class="n">toBranch</span><span class="p">,</span>
+            <span class="s2">&quot;userid&quot;</span><span class="p">:</span> <span class="n">userid</span>
+        <span class="p">})</span>
+        
+        <span class="k">return</span> <span class="n">ModelCommit</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+    <span class="c1"># END clone_branch</span>
+    
+<div class="viewcode-block" id="PlatformApi.commit_branch"><a class="viewcode-back" href="../../../../m4i_analytics.m4i.platform.html#m4i_analytics.m4i.platform.PlatformApi.PlatformApi.commit_branch">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">commit_branch</span><span class="p">(</span><span class="n">description</span><span class="p">,</span> <span class="n">fromBranch</span><span class="p">,</span> <span class="n">projectName</span><span class="p">,</span> <span class="n">toBranch</span><span class="p">,</span> <span class="n">userid</span><span class="p">,</span> <span class="n">parserName</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Merge one of the branches of your model with another branch of your model, applying the changes in either to both. </span>
+
+<span class="sd">        :returns: A ModelCommit instance describing the commit operation. Note that the commit happens asynchronously on the server side. You can monitor the progress via query_model requests.</span>
+<span class="sd">        :rtype: ModelCommit</span>
+<span class="sd">        </span>
+<span class="sd">        :param str description: Describe the purpose of merging the branches.</span>
+<span class="sd">        :param str projectName: The name of the project for which you want to merge branches.</span>
+<span class="sd">        :param str toBranch: The name of the target branch.</span>
+<span class="sd">        :param str userid: The name of the user creating the new branch.</span>
+<span class="sd">        :param str fromBranch: The name of the source branch.</span>
+<span class="sd">        :param str parserName: *Optional*. The name of the meta-model of the model that is contained in the target branch. Currently, the only valid option is &#39;archimate3&#39;. Default is &#39;archimate3&#39;.</span>
+
+<span class="sd">        :exception TypeError: Thrown when any of the parameters is not defined or when the query result could not be parsed into a ModelCommit instance.</span>
+<span class="sd">        :exception ValueError: Thrown when any of the parameters is not valid or when the query result could otherwise not be parsed.</span>
+<span class="sd">        :exception requests.exceptions.HTTPError: Thrown when the request returned with a 400/500 code variant.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="n">description</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Description is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">description</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Description should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">fromBranch</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;FromBranch is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">fromBranch</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;FromBranch should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">projectName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;ProjectName is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">projectName</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;ProjectName should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">toBranch</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;ToBranch is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">toBranch</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;ToBranch should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">userid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Userid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">userid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Userid should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">parserName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;ParserName is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">parserName</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;ParserName should be a string&#39;</span><span class="p">)</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="n">ApiUtils</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">COMMIT_BRANCH_ENDPOINT</span><span class="p">,</span> <span class="n">contentType</span><span class="o">=</span><span class="n">ContentType</span><span class="o">.</span><span class="n">JSON</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
+            <span class="s2">&quot;fromBranch&quot;</span><span class="p">:</span> <span class="n">fromBranch</span><span class="p">,</span>
+            <span class="s2">&quot;parserName&quot;</span><span class="p">:</span> <span class="n">parserName</span><span class="p">,</span>
+            <span class="s2">&quot;projectName&quot;</span><span class="p">:</span> <span class="n">projectName</span><span class="p">,</span>
+            <span class="s2">&quot;toBranch&quot;</span><span class="p">:</span> <span class="n">toBranch</span><span class="p">,</span>
+            <span class="s2">&quot;userid&quot;</span><span class="p">:</span> <span class="n">userid</span>
+        <span class="p">})</span>
+        
+        <span class="k">return</span> <span class="n">ModelCommit</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+    <span class="c1"># END commit_branch</span>
+
+<div class="viewcode-block" id="PlatformApi.force_commit"><a class="viewcode-back" href="../../../../m4i_analytics.m4i.platform.html#m4i_analytics.m4i.platform.PlatformApi.PlatformApi.force_commit">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">force_commit</span><span class="p">(</span><span class="n">addListLeft</span><span class="p">,</span> <span class="n">addListRight</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">deleteListLeft</span><span class="p">,</span> <span class="n">deleteListRight</span><span class="p">,</span> <span class="n">fromBranch</span><span class="p">,</span> <span class="n">fromModelId</span><span class="p">,</span> <span class="n">projectName</span><span class="p">,</span> <span class="n">taskid</span><span class="p">,</span> <span class="n">toBranch</span><span class="p">,</span> <span class="n">toModelId</span><span class="p">,</span> <span class="n">userid</span><span class="p">,</span> <span class="n">contentType</span><span class="o">=</span><span class="s2">&quot;archimate&quot;</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parserName</span><span class="o">=</span><span class="s2">&quot;archimate3&quot;</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Commit a version of your model to the repository, and resolve any conflicts according to the provided parameters. </span>
+<span class="sd">        </span>
+<span class="sd">        :returns: A ModelCommit instance describing the commit operation. Note that the commit happens asynchronously on the server side. You can monitor the progress via query_model requests.</span>
+<span class="sd">        :rtype: ModelCommit</span>
+<span class="sd">        </span>
+<span class="sd">        :param array&lt;str&gt; addListLeft: If there is a version conflict, and you wish to keep a particular newly added or otherwise modified element from the repository, you add the ID of that element to this list.</span>
+<span class="sd">        :param array&lt;str&gt; addListRight: If there is a version conflict, and you wish to keep a particular newly added or otherwise modified element from committed model, you add the ID of that element to this list.</span>
+<span class="sd">        :param str description: Describe the purpose of the commit.</span>
+<span class="sd">        :param array&lt;str&gt; deleteListLeft: If there is a version conflict, and you wish to delete a particular element from the repository, you add the ID of that element to this list.</span>
+<span class="sd">        :param array&lt;str&gt; deleteListRight: If there is a version conflict, and you wish to delete a particular element from the committed model, you add the ID of that element to this list.</span>
+<span class="sd">        :param fromBranch: The name of the source branch.</span>
+<span class="sd">        :param str fromModelId: The id of the model you wish to merge from. You can use this e.g. to merge from a version of a model before conflicts were resolved.</span>
+<span class="sd">        :param str projectName: The name of the project for which you want to do a commit.</span>
+<span class="sd">        :param str taskid: The id of the commit operation.</span>
+<span class="sd">        :param str toBranch: The name of the target branch. To do a commit within a branch, keep this the same as fromBranch.</span>
+<span class="sd">        :param str toModelId: The id of the model you wish to merge to. You can use this e.g. to merge towards a version of a model before conflicts were resolved.</span>
+<span class="sd">        :param str userid: The name of the user creating the new branch.</span>
+<span class="sd">        :param str contentType: *Optional*. The format in which you are committing the model. Valid options are: &#39;archimate&#39;, &#39;json&#39; and &#39;xml&#39;. Default is &#39;archimate&#39;.</span>
+<span class="sd">        :param str module: *Optional*. The name of the module to which you want to commit. You can also define new modules this way. By leaving this empty, you commit to the complete model. Default is empty.</span>
+<span class="sd">        :param str parserName: *Optional*. The name of the meta-model of the model that is contained in the target branch. Currently, the only valid option is &#39;archimate3&#39;. Default is &#39;archimate3&#39;.</span>
+<span class="sd">                    </span>
+<span class="sd">        :exception TypeError: Thrown when any of the parameters (other than module) is not defined or when the query result could not be parsed into a ModelCommit instance.</span>
+<span class="sd">        :exception ValueError: Thrown when any of the parameters is not valid or when the query result could otherwise not be parsed.</span>
+<span class="sd">        :exception requests.exceptions.HTTPError: Thrown when the request returned with a 400/500 code variant.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="n">addListLeft</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;AddListLeft is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">addListLeft</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">list</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;AddListLeft should be an array&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">addListRight</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;AddListRight is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">addListRight</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">list</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;AddListRight should be an array&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">description</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Description is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">description</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Description should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">deleteListLeft</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;DeleteListLeft is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">deleteListLeft</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">list</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;DeleteListLeft should be an array&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">deleteListRight</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;DeleteListRight is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">deleteListRight</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">list</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;DeleteListRight should be an array&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">fromBranch</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;FromBranch is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">fromBranch</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;FromBranch should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">fromModelId</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;FromModelId is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">fromModelId</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;FromModelId should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">projectName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;ProjectName is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">projectName</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;ProjectName should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">taskid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Taskid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">taskid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Taskid should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">toBranch</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;ToBranch is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">toBranch</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;ToBranch should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">toModelId</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;ToModelId is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">toModelId</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;ToModelId should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">userid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Userid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">userid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Userid should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">contentType</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;ContentType is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">contentType</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;ContentType should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">module</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Module is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">module</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">module</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Module should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">parserName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;ParserName is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">parserName</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;ParserName should be a string&#39;</span><span class="p">)</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="n">ApiUtils</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">FORCE_COMMIT_MODEL_ENDPOINT</span><span class="p">,</span> <span class="n">contentType</span><span class="o">=</span><span class="n">ContentType</span><span class="o">.</span><span class="n">JSON</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;addListLeft&quot;</span><span class="p">:</span> <span class="n">addListLeft</span><span class="p">,</span>
+            <span class="s2">&quot;addListRight&quot;</span><span class="p">:</span> <span class="n">addListRight</span><span class="p">,</span>
+            <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
+            <span class="s2">&quot;commitTaskId&quot;</span><span class="p">:</span> <span class="n">taskid</span><span class="p">,</span>
+            <span class="s2">&quot;contentType&quot;</span><span class="p">:</span> <span class="n">contentType</span><span class="p">,</span>
+            <span class="s2">&quot;deleteListLeft&quot;</span><span class="p">:</span> <span class="n">deleteListLeft</span><span class="p">,</span>
+            <span class="s2">&quot;deleteListRight&quot;</span><span class="p">:</span> <span class="n">deleteListRight</span><span class="p">,</span>
+            <span class="s2">&quot;fromBranchName&quot;</span><span class="p">:</span> <span class="n">fromBranch</span><span class="p">,</span>
+            <span class="s2">&quot;fromModelId&quot;</span><span class="p">:</span> <span class="n">fromModelId</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="n">module</span><span class="p">,</span>
+            <span class="s2">&quot;parserName&quot;</span><span class="p">:</span> <span class="n">parserName</span><span class="p">,</span>
+            <span class="s2">&quot;projectName&quot;</span><span class="p">:</span> <span class="n">projectName</span><span class="p">,</span>
+            <span class="s2">&quot;toBranchName&quot;</span><span class="p">:</span> <span class="n">toBranch</span><span class="p">,</span>
+            <span class="s2">&quot;toModelId&quot;</span><span class="p">:</span> <span class="n">toModelId</span><span class="p">,</span>
+            <span class="s2">&quot;userid&quot;</span><span class="p">:</span> <span class="n">userid</span>
+        <span class="p">})</span>
+        
+        <span class="k">return</span> <span class="n">ModelCommit</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div></div>
+    <span class="c1"># END force_commit</span>
+<span class="c1"># END PlatformApi</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Author.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

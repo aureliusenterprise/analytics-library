@@ -1,0 +1,514 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>m4i_analytics.m4i.portal.PortalApi &#8212; analytics-library  documentation</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for m4i_analytics.m4i.portal.PortalApi</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">m4i_analytics.m4i.ApiUtils</span> <span class="k">import</span> <span class="n">ApiUtils</span><span class="p">,</span> <span class="n">ContentType</span>
+<span class="kn">from</span> <span class="nn">m4i_analytics.m4i.portal.model.CreateProjectResponse</span> <span class="k">import</span> <span class="n">CreateProjectResponse</span>
+<span class="kn">from</span> <span class="nn">m4i_analytics.m4i.portal.model.TableDashboardResponse</span> <span class="k">import</span> <span class="n">TableDashboardResponse</span>
+<span class="kn">import</span> <span class="nn">m4i_analytics.m4i.portal.config</span> <span class="k">as</span> <span class="nn">config</span>
+
+
+<div class="viewcode-block" id="PortalApi"><a class="viewcode-back" href="../../../../m4i_analytics.m4i.portal.html#m4i_analytics.m4i.portal.PortalApi.PortalApi">[docs]</a><span class="k">class</span> <span class="nc">PortalApi</span><span class="p">():</span>
+    
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class implements various API calls to functions provided by the M4I portal </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="PortalApi.create_project"><a class="viewcode-back" href="../../../../m4i_analytics.m4i.portal.html#m4i_analytics.m4i.portal.PortalApi.PortalApi.create_project">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_project</span><span class="p">(</span><span class="n">taskid</span><span class="p">,</span> <span class="n">projectid</span><span class="p">,</span> <span class="n">run_by</span><span class="p">,</span> <span class="n">owner_username</span><span class="p">,</span> <span class="n">owner_email</span><span class="p">,</span> <span class="n">owner_firstname</span><span class="o">=</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="n">owner_lastname</span><span class="o">=</span><span class="s1">&#39;Doe&#39;</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new project on the portal. A project comes with a modelview dashboard by default.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: The ID of the created dashboard</span>
+<span class="sd">        :rtype: CreateProjectResponse</span>
+<span class="sd">        </span>
+<span class="sd">        :param str taskid: A unique identifier for the task instance you are starting.</span>
+<span class="sd">        :param str projectid: A unique name for the project.</span>
+<span class="sd">        :param str run_by: A unique identifier for the user who started the operation.</span>
+<span class="sd">        :param str owner_username: The username of the user who will own the project</span>
+<span class="sd">        :param str owner_email: The email of the user who will own the project.</span>
+<span class="sd">        :param str owner_firstname: *Optional*. The first name of the user who will own the project. By default, is set to &#39;John&#39;. </span>
+<span class="sd">        :param str owner_lastname: *Optional*. The last name of the user who will own the project. By default, is set to &#39;Doe&#39;.</span>
+<span class="sd">        </span>
+<span class="sd">        :exception TypeError: Thrown when any of the parameters (excluding owner_firstname and owner_lastname) is not defined.</span>
+<span class="sd">        :exception ValueError: Thrown when any of the parameters is not valid.</span>
+<span class="sd">        :exception requests.exceptions.HTTPError: Thrown when the request returned with a 400/500 code variant.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="n">taskid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Taskid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">taskid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Taskid should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">projectid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Projectid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">projectid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Projectid should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">run_by</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Run_by is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">run_by</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Run_by should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">owner_username</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Owner_username is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">owner_username</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Owner_username should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">owner_email</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Owner_email is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">owner_email</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Owner_email should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">owner_firstname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">owner_firstname</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Owner_firstname should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">owner_lastname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">owner_lastname</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Owner_lastname should be a string&#39;</span><span class="p">)</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="n">ApiUtils</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">CREATE_PROJECT_ENDPOINT</span><span class="p">,</span> <span class="n">contentType</span><span class="o">=</span><span class="n">ContentType</span><span class="o">.</span><span class="n">JSON</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">TASK_ID_KEY</span><span class="p">:</span> <span class="n">taskid</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">PROJECT_NAME_KEY</span><span class="p">:</span> <span class="n">projectid</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">RUN_BY_KEY</span><span class="p">:</span> <span class="n">run_by</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">USERNAME_KEY</span><span class="p">:</span> <span class="n">owner_username</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">EMAIL_KEY</span><span class="p">:</span> <span class="n">owner_email</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">FIRST_NAME_KEY</span><span class="p">:</span> <span class="n">owner_firstname</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">LAST_NAME_KEY</span><span class="p">:</span> <span class="n">owner_lastname</span>
+        <span class="p">})</span>
+        
+        <span class="k">return</span> <span class="n">CreateProjectResponse</span><span class="p">(</span><span class="o">**</span><span class="n">result</span><span class="p">)</span></div>
+    <span class="c1"># END create_project</span>
+    
+<div class="viewcode-block" id="PortalApi.update_project"><a class="viewcode-back" href="../../../../m4i_analytics.m4i.portal.html#m4i_analytics.m4i.portal.PortalApi.PortalApi.update_project">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">update_project</span><span class="p">(</span><span class="n">taskid</span><span class="p">,</span> <span class="n">projectid</span><span class="p">,</span> <span class="n">run_by</span><span class="p">,</span> <span class="n">branch_name</span><span class="p">,</span> <span class="n">model_timestamp</span><span class="p">,</span> <span class="n">data_timestamp</span><span class="p">,</span> <span class="n">parser_name</span><span class="o">=</span><span class="s1">&#39;archimate3&#39;</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the model and data associated with a project in a single call.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: A string signaling that the operation completed successfully (&#39;OK&#39;)</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        </span>
+<span class="sd">        :param str taskid: A unique identifier for the task instance you are starting.</span>
+<span class="sd">        :param str projectid: The unique name of the project you wish to update.</span>
+<span class="sd">        :param str run_by: A unique identifier for the user who started the operation.</span>
+<span class="sd">        :param str branch_name: The name of the branch of the model you wish to use as the source of the update.</span>
+<span class="sd">        :param long model_timestamp: The version of the model you wish to use as the source of the update.</span>
+<span class="sd">        :param long data_timestamp: The version of the data you wish to use as the source of the update.</span>
+<span class="sd">        :param str parser_name: *Optional*. The name of the meta-model of the model you wish to use as the source of the update. Currently, the only valid option is &#39;archimate3&#39;. Defaults to &#39;archimate3&#39;.</span>
+
+<span class="sd">        :exception TypeError: Thrown when any of the parameters is not defined.</span>
+<span class="sd">        :exception ValueError: Thrown when any of the parameters is not valid.</span>
+<span class="sd">        :exception requests.exceptions.HTTPError: Thrown when the request returned with a 400/500 code variant.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="n">taskid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Taskid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">taskid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Taskid should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">projectid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Projectid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">projectid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Projectid should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">run_by</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Run_by is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">run_by</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Run_by should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">branch_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Branch_name is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">branch_name</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Branch_name should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model_timestamp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Model_timestamp is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">model_timestamp</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="n">long</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Model_timestamp should be a long&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">data_timestamp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Data_timestamp is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">data_timestamp</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="n">long</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Data_timestamp should be a long&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">parser_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Parser_name is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">parser_name</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Parser_name should be a string&#39;</span><span class="p">)</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="n">ApiUtils</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">UPDATE_PROJECT_ENDPOINT</span><span class="p">,</span> <span class="n">contentType</span><span class="o">=</span><span class="n">ContentType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">TASK_ID_KEY</span><span class="p">:</span> <span class="n">taskid</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">PROJECT_NAME_KEY</span><span class="p">:</span> <span class="n">projectid</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">RUN_BY_KEY</span><span class="p">:</span> <span class="n">run_by</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">BRANCH_NAME_KEY</span><span class="p">:</span> <span class="n">branch_name</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">DELTA_REVISION_KEY</span><span class="p">:</span> <span class="n">model_timestamp</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">DATA_REVISION_KEY</span><span class="p">:</span> <span class="n">data_timestamp</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">PARSER_NAME_KEY</span><span class="p">:</span> <span class="n">parser_name</span>
+        <span class="p">})</span>
+        
+        <span class="k">return</span> <span class="n">result</span></div>
+    <span class="c1"># END update_project</span>
+        
+<div class="viewcode-block" id="PortalApi.update_project_model"><a class="viewcode-back" href="../../../../m4i_analytics.m4i.portal.html#m4i_analytics.m4i.portal.PortalApi.PortalApi.update_project_model">[docs]</a>    <span class="nd">@staticmethod</span>    
+    <span class="k">def</span> <span class="nf">update_project_model</span><span class="p">(</span><span class="n">taskid</span><span class="p">,</span> <span class="n">projectid</span><span class="p">,</span> <span class="n">run_by</span><span class="p">,</span> <span class="n">branch_name</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">parser_name</span><span class="o">=</span><span class="s1">&#39;archimate3&#39;</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the model associated with a project.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: A string signaling that the operation completed successfully (&#39;OK&#39;)</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        </span>
+<span class="sd">        :param str taskid: A unique identifier for the task instance you are starting.</span>
+<span class="sd">        :param str projectid: The unique name of the project you wish to update.</span>
+<span class="sd">        :param str run_by: A unique identifier for the user who started the operation.</span>
+<span class="sd">        :param str branch_name: The name of the branch of the model you wish to use as the source of the update.</span>
+<span class="sd">        :param long version: The version of the model you wish to use as the source of the update.</span>
+<span class="sd">        :param str parser_name: *Optional*. The name of the meta-model of the model you wish to use as the source of the update. Currently, the only valid option is &#39;archimate3&#39;. Defaults to &#39;archimate3&#39;.</span>
+
+<span class="sd">        :exception TypeError: Thrown when any of the parameters is not defined.</span>
+<span class="sd">        :exception ValueError: Thrown when any of the parameters is not valid.</span>
+<span class="sd">        :exception requests.exceptions.HTTPError: Thrown when the request returned with a 400/500 code variant.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="n">taskid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Taskid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">taskid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Taskid should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">projectid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Projectid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">projectid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Projectid should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">run_by</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Run_by is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">run_by</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Run_by should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">branch_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Branch_name is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">branch_name</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Branch_name should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">version</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Version is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">version</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="n">long</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Version should be a long&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">parser_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Parser_name is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">parser_name</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Parser_name should be a string&#39;</span><span class="p">)</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="n">ApiUtils</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">DELTA_ENDPOINT</span><span class="p">,</span> <span class="n">contentType</span><span class="o">=</span><span class="n">ContentType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">TASK_ID_KEY</span><span class="p">:</span> <span class="n">taskid</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">PROJECT_NAME_KEY</span><span class="p">:</span> <span class="n">projectid</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">RUN_BY_KEY</span><span class="p">:</span> <span class="n">run_by</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">BRANCH_NAME_KEY</span><span class="p">:</span> <span class="n">branch_name</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">VERSION_KEY</span><span class="p">:</span> <span class="n">version</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">PARSER_NAME_KEY</span><span class="p">:</span> <span class="n">parser_name</span>
+        <span class="p">})</span>
+        
+        <span class="k">return</span> <span class="n">result</span></div>
+    <span class="c1"># END update_project_model</span>
+     
+<div class="viewcode-block" id="PortalApi.update_project_data"><a class="viewcode-back" href="../../../../m4i_analytics.m4i.portal.html#m4i_analytics.m4i.portal.PortalApi.PortalApi.update_project_data">[docs]</a>    <span class="nd">@staticmethod</span>    
+    <span class="k">def</span> <span class="nf">update_project_data</span><span class="p">(</span><span class="n">taskid</span><span class="p">,</span> <span class="n">projectid</span><span class="p">,</span> <span class="n">run_by</span><span class="p">,</span> <span class="n">branch_name</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">parser_name</span><span class="o">=</span><span class="s1">&#39;archimate3&#39;</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the data associated with a project.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: A string signaling that the operation completed successfully (&#39;OK&#39;)</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        </span>
+<span class="sd">        :param str taskid: A unique identifier for the task instance you are starting.</span>
+<span class="sd">        :param str projectid: The unique name of the project you wish to update.</span>
+<span class="sd">        :param str run_by: A unique identifier for the user who started the operation.</span>
+<span class="sd">        :param str branch_name: The name of the branch of the model you wish to use as the source of the update.</span>
+<span class="sd">        :param long version: The version of the data you wish to use as the source of the update.</span>
+<span class="sd">        :param str parser_name: *Optional*. The name of the meta-model of the model you wish to use as the source of the update. Currently, the only valid option is &#39;archimate3&#39;. Defaults to &#39;archimate3&#39;.</span>
+
+<span class="sd">        :exception TypeError: Thrown when any of the parameters is not defined.</span>
+<span class="sd">        :exception ValueError: Thrown when any of the parameters is not valid.</span>
+<span class="sd">        :exception requests.exceptions.HTTPError: Thrown when the request returned with a 400/500 code variant.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="n">taskid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Taskid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">taskid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Taskid should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">projectid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Projectid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">projectid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Projectid should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">run_by</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Run_by is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">run_by</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Run_by should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">branch_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Branch_name is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">branch_name</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Branch_name should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">version</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Version is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">version</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="n">long</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Version should be a long&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">parser_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Parser_name is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">parser_name</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Parser_name should be a string&#39;</span><span class="p">)</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="n">ApiUtils</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">DATA_ENDPOINT</span><span class="p">,</span> <span class="n">contentType</span><span class="o">=</span><span class="n">ContentType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">TASK_ID_KEY</span><span class="p">:</span> <span class="n">taskid</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">PROJECT_NAME_KEY</span><span class="p">:</span> <span class="n">projectid</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">RUN_BY_KEY</span><span class="p">:</span> <span class="n">run_by</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">BRANCH_NAME_KEY</span><span class="p">:</span> <span class="n">branch_name</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">VERSION_KEY</span><span class="p">:</span> <span class="n">version</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">PARSER_NAME_KEY</span><span class="p">:</span> <span class="n">parser_name</span>
+        <span class="p">})</span>
+        
+        <span class="k">return</span> <span class="n">result</span></div>
+    <span class="c1"># END update_project_data</span>
+        
+<div class="viewcode-block" id="PortalApi.create_table_dashboard"><a class="viewcode-back" href="../../../../m4i_analytics.m4i.portal.html#m4i_analytics.m4i.portal.PortalApi.PortalApi.create_table_dashboard">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_table_dashboard</span><span class="p">(</span><span class="n">taskid</span><span class="p">,</span> <span class="n">projectid</span><span class="p">,</span> <span class="n">run_by</span><span class="p">,</span> <span class="n">tablename</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a dashboard with a table mirroring a table in the database, based on the given tablename</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: The ID of the created dashboard</span>
+<span class="sd">        :rtype: TableDashboardResponse | str</span>
+
+<span class="sd">        :param str taskid: A unique identifier for the task instance you are starting.</span>
+<span class="sd">        :param str projectid: The unique name of the project you wish to update.</span>
+<span class="sd">        :param str run_by: A unique identifier for the user who started the operation.</span>
+<span class="sd">        :param str tablename: The name of the table in the database you wish to mirror on the dashboard</span>
+<span class="sd">        </span>
+<span class="sd">        :exception TypeError: Thrown when any of the parameters is not defined.</span>
+<span class="sd">        :exception ValueError: Thrown when any of the parameters is not valid.</span>
+<span class="sd">        :exception requests.exceptions.HTTPError: Thrown when the request returned with a 400/500 code variant.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="n">taskid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Taskid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">taskid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Taskid should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">projectid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Projectid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">projectid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Projectid should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">run_by</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Run_by is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">run_by</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Run_by should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">tablename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Tablename is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">tablename</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Tablename should be a string&#39;</span><span class="p">)</span>
+        
+        <span class="n">response</span> <span class="o">=</span> <span class="n">ApiUtils</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">TABLE_DASHBOARD_ENDPOINT</span><span class="p">,</span> <span class="n">contentType</span><span class="o">=</span><span class="n">ContentType</span><span class="o">.</span><span class="n">JSON</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">TASK_ID_KEY</span><span class="p">:</span> <span class="n">taskid</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">PROJECT_NAME_KEY</span><span class="p">:</span> <span class="n">projectid</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">RUN_BY_KEY</span><span class="p">:</span> <span class="n">run_by</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">TABLENAME_KEY</span><span class="p">:</span> <span class="n">tablename</span>
+        <span class="p">})</span>
+    
+        <span class="n">result</span> <span class="o">=</span> <span class="n">response</span>
+    
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">TableDashboardResponse</span><span class="p">(</span><span class="o">**</span><span class="n">result</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">result</span></div>
+    <span class="c1"># END create_table_dashboard</span>
+        
+<div class="viewcode-block" id="PortalApi.add_project_users"><a class="viewcode-back" href="../../../../m4i_analytics.m4i.portal.html#m4i_analytics.m4i.portal.PortalApi.PortalApi.add_project_users">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_project_users</span><span class="p">(</span><span class="n">taskid</span><span class="p">,</span> <span class="n">projectid</span><span class="p">,</span> <span class="n">run_by</span><span class="p">,</span> <span class="n">users</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Give one or more users access to a project</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: The ID of the role assigned to the users</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        </span>
+<span class="sd">        :param str taskid: A unique identifier for the task instance you are starting.</span>
+<span class="sd">        :param str projectid: The unique name of the project you wish to update.</span>
+<span class="sd">        :param str run_by: A unique identifier for the user who started the operation.</span>
+<span class="sd">        :param list users: A list of the users you wish to give access to the project</span>
+<span class="sd">        </span>
+<span class="sd">        :exception TypeError: Thrown when any of the parameters is not defined.</span>
+<span class="sd">        :exception ValueError: Thrown when any of the parameters is not valid.</span>
+<span class="sd">        :exception requests.exceptions.HTTPError: Thrown when the request returned with a 400/500 code variant.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="n">taskid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Taskid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">taskid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Taskid should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">projectid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Projectid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">projectid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Projectid should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">run_by</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Run_by is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">run_by</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Run_by should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">users</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Users is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">users</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Users should be a list&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">users</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Users should not be empty&#39;</span><span class="p">)</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="n">ApiUtils</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">DELTA_ENDPOINT</span><span class="p">,</span> <span class="n">contentType</span><span class="o">=</span><span class="n">ContentType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">TASK_ID_KEY</span><span class="p">:</span> <span class="n">taskid</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">PROJECT_NAME_KEY</span><span class="p">:</span> <span class="n">projectid</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">RUN_BY_KEY</span><span class="p">:</span> <span class="n">run_by</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">USERS_KEY</span><span class="p">:</span> <span class="n">users</span>
+        <span class="p">})</span>
+        
+        <span class="k">return</span> <span class="n">result</span></div>
+    <span class="c1"># END add_project_users</span>
+        
+<div class="viewcode-block" id="PortalApi.remove_project_user"><a class="viewcode-back" href="../../../../m4i_analytics.m4i.portal.html#m4i_analytics.m4i.portal.PortalApi.PortalApi.remove_project_user">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">remove_project_user</span><span class="p">(</span><span class="n">taskid</span><span class="p">,</span> <span class="n">projectid</span><span class="p">,</span> <span class="n">run_by</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove access to a project for a particular user</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: A string signaling that the operation completed successfully (&#39;OK&#39;)</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        </span>
+<span class="sd">        :param str taskid: A unique identifier for the task instance you are starting.</span>
+<span class="sd">        :param str projectid: The unique name of the project you wish to update.</span>
+<span class="sd">        :param str run_by: A unique identifier for the user who started the operation.</span>
+<span class="sd">        :param str username: The username of the user for whom you wish to revoke access</span>
+<span class="sd">        </span>
+<span class="sd">        :exception TypeError: Thrown when any of the parameters is not defined.</span>
+<span class="sd">        :exception ValueError: Thrown when any of the parameters is not valid.</span>
+<span class="sd">        :exception requests.exceptions.HTTPError: Thrown when the request returned with a 400/500 code variant.      </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="n">taskid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Taskid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">taskid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Taskid should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">projectid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Projectid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">projectid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Projectid should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">run_by</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Run_by is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">run_by</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Run_by should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">username</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Username is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">username</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Username should be a string&#39;</span><span class="p">)</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="n">ApiUtils</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">DELTA_ENDPOINT</span><span class="p">,</span> <span class="n">contentType</span><span class="o">=</span><span class="n">ContentType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">TASK_ID_KEY</span><span class="p">:</span> <span class="n">taskid</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">PROJECT_NAME_KEY</span><span class="p">:</span> <span class="n">projectid</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">RUN_BY_KEY</span><span class="p">:</span> <span class="n">run_by</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">RM_USER_USERNAME_KEY</span><span class="p">:</span> <span class="n">username</span>
+        <span class="p">})</span>
+        
+        <span class="k">return</span> <span class="n">result</span></div>
+    <span class="c1"># END remove_project_user</span>
+        
+<div class="viewcode-block" id="PortalApi.unpublish_project"><a class="viewcode-back" href="../../../../m4i_analytics.m4i.portal.html#m4i_analytics.m4i.portal.PortalApi.PortalApi.unpublish_project">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">unpublish_project</span><span class="p">(</span><span class="n">taskid</span><span class="p">,</span> <span class="n">projectid</span><span class="p">,</span> <span class="n">run_by</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove access to a project for all current members</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: A string signaling that the operation completed successfully (&#39;OK&#39;)</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        </span>
+<span class="sd">        :param str taskid: A unique identifier for the task instance you are starting.</span>
+<span class="sd">        :param str projectid: The unique name of the project you wish to update.</span>
+<span class="sd">        :param str run_by: A unique identifier for the user who started the operation.</span>
+<span class="sd">        </span>
+<span class="sd">        :exception TypeError: Thrown when any of the parameters is not defined.</span>
+<span class="sd">        :exception ValueError: Thrown when any of the parameters is not valid.</span>
+<span class="sd">        :exception requests.exceptions.HTTPError: Thrown when the request returned with a 400/500 code variant.      </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="n">taskid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Taskid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">taskid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Taskid should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">projectid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Projectid is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">projectid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Projectid should be a string&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">run_by</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Run_by is not defined&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">run_by</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Run_by should be a string&#39;</span><span class="p">)</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="n">ApiUtils</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">DELTA_ENDPOINT</span><span class="p">,</span> <span class="n">contentType</span><span class="o">=</span><span class="n">ContentType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">TASK_ID_KEY</span><span class="p">:</span> <span class="n">taskid</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">PROJECT_NAME_KEY</span><span class="p">:</span> <span class="n">projectid</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">RUN_BY_KEY</span><span class="p">:</span> <span class="n">run_by</span><span class="p">,</span>
+        <span class="p">})</span>   
+        
+        <span class="k">return</span> <span class="n">result</span>    </div></div>
+    <span class="c1"># END unpublish_project</span>
+<span class="c1"># END PortalApi</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Author.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
